@@ -1,0 +1,10 @@
+syntax: glob
+_ReSharper*
+*.user
+*.suo
+*/bin/*
+*/obj/*
+SourceBundleBuild/*
+Packages/*
+*.ncrunchsolution
+NuGetBuild/*
