@@ -26,6 +26,6 @@ Nuget package http://nuget.org/packages/Caseless.Fody
         return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
     }
 
-Other string comparison methods also get converted. See (ConvertedMethods)[wiki/ConvertedMethods]
+Other string comparison methods also get converted. See [ConvertedMethods](wiki/ConvertedMethods)
 
-To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see (DefaultStringComparison)[wiki/DefaultStringComparison]
+To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see [DefaultStringComparison](wiki/DefaultStringComparison)
