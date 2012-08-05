@@ -40,8 +40,16 @@ public class ModuleWeaver
                              };
         converterCache.Execute();
 
-        foreach (var type in ModuleDefinition.GetAllTypeDefinitions())
+        foreach (var type in ModuleDefinition.GetTypes())
         {
+            if (type.IsInterface)
+            {
+                continue;
+            }
+            if (type.IsEnum)
+            {
+                continue;
+            }
             ProcessType(type);
         }
     }
