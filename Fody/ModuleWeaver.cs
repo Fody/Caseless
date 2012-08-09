@@ -103,6 +103,7 @@ public class ModuleWeaver
                         instructions.Insert(index, innerInstruction);
                         index++;
                     }
+                    break;
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using NUnit.Framework;
 
 public abstract class BaseTaskTests
@@ -20,7 +21,10 @@ public abstract class BaseTaskTests
     [TestFixtureSetUp]
     public void Setup()
     {
+        Stopwatch startNew = Stopwatch.StartNew();
         var weaverHelper = new WeaverHelper(projectPath);
+        startNew .Stop();
+        Debug.WriteLine(startNew.ElapsedMilliseconds);
         assembly = weaverHelper.Assembly;
 
         targetClass = assembly.GetInstance("TargetClass");
