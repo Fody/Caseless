@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 public class ModuleWeaver
 {
@@ -68,6 +69,7 @@ public class ModuleWeaver
 
     void ProcessMethod(MethodDefinition method)
     {
+        method.Body.SimplifyMacros();
         var instructions = method.Body.Instructions;
         for (var index = 0; index < instructions.Count; index++)
         {
@@ -104,5 +106,6 @@ public class ModuleWeaver
                 }
             }
         }
+        method.Body.OptimizeMacros();
     }
 }
