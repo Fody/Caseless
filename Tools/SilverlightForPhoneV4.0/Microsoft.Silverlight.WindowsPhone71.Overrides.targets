@@ -20,9 +20,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   <PropertyGroup>
     <RuntimePathRegistryKey Condition="'$(RuntimePathRegistryKey)' == ''">Software\Microsoft\Microsoft SDKs\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\ReferenceAssemblies</RuntimePathRegistryKey>
     <CreateTestPage>false</CreateTestPage>
-    <TargetFrameworkMonikerDisplayName>Silverlight 4.0 Windows Phone Profile</TargetFrameworkMonikerDisplayName>
+    <TargetFrameworkMonikerDisplayName>Silverlight 4.0 Windows Phone 7.1 Profile</TargetFrameworkMonikerDisplayName>
+    <WindowsPhone7RegistryBase>Software\Microsoft\Microsoft SDKs\Silverlight for Phone</WindowsPhone7RegistryBase>
+    <WindowsPhone7RegistryBaseVersion>$(TargetFrameworkVersion)</WindowsPhone7RegistryBaseVersion>    
     <TargetCompactFramework Condition = "'$(MSBuildProjectExtension)'=='.vbproj'">true</TargetCompactFramework>    
-        <!-- Extract out the Background Image for Tile Background and IconPath for ApplicationIcon by reading the WMAppManifest.xml -->
+       <!-- Extract out the Background Image for Tile Background and IconPath for ApplicationIcon by reading the WMAppManifest.xml -->
     <TokenBackgroundImage Condition="Exists('$(MSBuildProjectDirectory)\\Properties\\WMAppManifest.xml')">$([System.Text.RegularExpressions.Regex]::Match(
        $([System.Text.RegularExpressions.Regex]::Match(
         $([System.IO.File]::ReadAllText($(MSBuildProjectDirectory)\\Properties\\WMAppManifest.xml)),

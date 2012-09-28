@@ -35,7 +35,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         Name="ValidateWMAppManifest"
         DependsOnTargets="$(CreateSilverlightAppManifestDependsOn)">
 
-        <ValidateWMAppManifest RuntimeDir="$(MSBuildExtensionsPath32)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\" WMAppManifest="$(ProjectDir)Properties\WMAppManifest.xml" TargetDir="$(TargetDir)"/>
+        <ValidateWMAppManifest RuntimeDir="$([System.IO.Path]::Combine($(WindowsPhone7SdkInstallPath), 'Tools', 'CapDetect'))"
+                               WMAppManifest="$(ProjectDir)$(PathOfWMAppManifestRelativeToProject)"
+                               TargetDir="$(TargetDir)"
+                               AppPlatformVersion="$(WindowsPhone7SdkVersion)"
+                               />
     </Target>
 
 </Project>

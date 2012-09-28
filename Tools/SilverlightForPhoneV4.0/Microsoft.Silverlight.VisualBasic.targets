@@ -1,6 +1,6 @@
 ﻿<!--
 ***********************************************************************************************
-Microsoft.Silverlight.targets
+Microsoft.Silverlight.VisualBasic.targets
 
 WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
           created a backup copy.  Incorrect changes to this file will make it
@@ -16,10 +16,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
              prior to importing the common targets -->
         <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
         <FrameworkRegistryBase>Software\Microsoft\Microsoft SDKs\$(TargetFrameworkIdentifier)</FrameworkRegistryBase>
+        <VBRuntime>Embed</VBRuntime>
+        <PathOfWMAppManifestRelativeToProject>My Project\WMAppManifest.xml</PathOfWMAppManifestRelativeToProject>
     </PropertyGroup>
-    <ItemGroup>
-        <InferredReference Include="Microsoft.VisualBasic.Dll"/>
-    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.Targets" />
     <Import Project="Microsoft.Silverlight.Common.targets" />
 </Project>

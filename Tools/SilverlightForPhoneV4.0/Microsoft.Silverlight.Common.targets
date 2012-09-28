@@ -14,6 +14,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.GetSilverlightFrameworkPath" AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.CompileXaml"  AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.ValidateXaml" AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
+    <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.ValidateReferences"  AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.XapPackager"  AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.CreateSilverlightAppManifest" AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
     <UsingTask TaskName="Microsoft.Silverlight.Build.Tasks.CreateHtmlTestPage" AssemblyFile="Microsoft.Silverlight.WindowsPhone.Build.Tasks.dll" />
@@ -34,7 +35,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <RuntimePathRegistryKey Condition="'$(RuntimePathRegistryKey)' == ''">$(FrameworkRegistryBaseWithVersion)\ReferenceAssemblies</RuntimePathRegistryKey>
         <RuntimeVersionRegistryKey Condition="'$(RuntimeVersionRegistryKey)' == ''">$(FrameworkRegistryBaseWithVersion)\ReferenceAssemblies</RuntimeVersionRegistryKey>
         <TargetFrameworkMonikerDisplayName Condition="'$(TargetFrameworkMonikerDisplayName)' == ''">Silverlight 4</TargetFrameworkMonikerDisplayName>
-        <!--If the path to the sign tool is not set, assume the SDK path -->
+        <ReferencesValidationRequiredForWindowsPhone Condition="'$(ReferencesValidationRequiredForWindowsPhone)' == ''">False</ReferencesValidationRequiredForWindowsPhone>
+	<!--If the path to the sign tool is not set, assume the SDK path -->
         <SignToolPath Condition="'$(SignToolPath)' == ''">$(FrameworkSDKRoot)bin</SignToolPath>
     </PropertyGroup>
 
@@ -84,6 +86,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             RegistryBase="$(FrameworkRegistryBaseWithVersion)"
             RuntimePathRegistryKey="$(RuntimePathRegistryKey)"
             RuntimeVersionRegistryKey="$(RuntimeVersionRegistryKey)"
+            AdditionalRegistryBasePaths="$([System.IO.Path]::Combine($(WindowsPhone7RegistryBase), $(WindowsPhone7RegistryBaseVersion)))"
         >
             <Output TaskParameter="SilverlightPath" PropertyName="TargetFrameworkDirectory" Condition="'$(TargetFrameworkDirectory)' == ''"/>
             <Output TaskParameter="SilverlightSDKPaths" ItemName="_TargetFrameworkSDKDirectoryItem" Condition="'$(TargetFrameworkSDKDirectory)' == ''"/>
@@ -114,8 +117,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <Output TaskParameter="Value" PropertyName="AssemblySearchPaths"/>
         </CreateProperty>
 
-      
-        
+
     </Target>
 
 
@@ -208,6 +210,23 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <Message Text="(Out) GeneratedCodeFiles: '@(_GeneratedCodeFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
     </Target>
 
+
+<!--   
+    ================================================================
+                         ValidateReferences
+    ================================================================
+    -->
+    <Target Name="ValidateReferences"
+          Condition="'$(ReferencesValidationRequiredForWindowsPhone)' == 'true'" >
+
+        <ValidateReferences         
+	       TargetFrameworkDirectory="$(TargetFrameworkDirectory)" 
+               ReferenceValidationRules="$(WindowsPhoneReferenceValidationRules)"              	
+               ReferenceAssemblies ="@(ReferencePath);@(InferredReference->'$(TargetFrameworkDirectory)\%(Identity)')"
+               >            
+        </ValidateReferences>
+    </Target>
+
     <!--   
     ================================================================
                            ValidateXaml
@@ -216,6 +235,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   <PropertyGroup>
         <ValidateXamlDependsOn>
             Compile;
+           ValidateReferences;
         </ValidateXamlDependsOn>
     </PropertyGroup>
 
@@ -237,8 +257,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                >
         </ValidateXaml>
     </Target>
-
-    <!--   
+    
+<!--   
     ================================================================
                            XapPackager
     This task packages the outputs of the project into a single xap
@@ -272,6 +292,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
             TimestampUrl="$(ManifestTimestampUrl)"
             IsRFC3161TimestampUrl="$(IsRFC3161TimestampUrl)"
+            SdkVersion="$(WindowsPhone7SdkVersion)"            
             >
             
             <!--Add to Clean-->
@@ -371,7 +392,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     ============================================================
     -->
     <PropertyGroup>
-        <FilesToXapDependsOn>CreateSilverlightAppManifest;CategorizeSilverlightReferences</FilesToXapDependsOn>
+        <FilesToXapDependsOn>CreateSilverlightAppManifest;CategorizeSilverlightReferences;GetCopyToOutputDirectoryContentProjectItems</FilesToXapDependsOn>
     </PropertyGroup>
     <Target
         Name="FilesToXap"
@@ -383,8 +404,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <XapFilesInputCollection Include="@(BuiltProjectOutputGroupKeyOutput)"/>
             <XapFilesInputCollection Include="@(_SilverlightPackagedAssemblies)" />
             <XapFilesInputCollection Include="@(_SilverlightPackagedSatelliteAssemblies)" />
-            <XapFilesInputCollection Include="@(ContentWithTargetPath)"/>
+            <XapFilesInputCollection Include="@(ContentWithTargetPath)" Condition="'%(ContentWithTargetPath.OriginalItemSpec)' != '$(TokenBackgroundImage)' and '%(ContentWithTargetPath.OriginalItemSpec)' != '$(ApplicationIconImage)'"/>
             <XapFilesInputCollection Include="$(AppManifestFilename)"/>
+            <!-- Add support for pulling in Contentproj output for SL+XNA -->
+            <XapFilesInputCollection Include="@(AllItemsFullPathWithTargetPath->'$(OutDir)%(TargetPath)')" Condition="'%(AllItemsFullPathWithTargetPath.OriginalItemSpec)' != '$(TokenBackgroundImage)' and '%(AllItemsFullPathWithTargetPath.OriginalItemSpec)' != '$(ApplicationIconImage)'"/>
         </ItemGroup>
         
     </Target>
@@ -645,7 +668,20 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             SupportedCultures="$(SupportedCultures)" 
         />
     </Target>
-    
+    <PropertyGroup> 
+        <ProjectDesignTimeAssemblyResolutionSearchPaths Condition=" '$(WindowsPhone7RegistryBase)' != '' and '$(WindowsPhone7RegistryBaseVersion)' != '' "> 
+            {CandidateAssemblyFiles}; 
+            $(ReferencePath); 
+            {HintPathFromItem}; 
+            {TargetFrameworkDirectory};            
+            {Registry:$(FrameworkRegistryBase),$(TargetFrameworkVersion),$(AssemblyFoldersSuffix)$(AssemblyFoldersExConditions)}; 
+ 	    {Registry:$(WindowsPhone7RegistryBase),$(WindowsPhone7RegistryBaseVersion),$(AssemblyFoldersSuffix)$(AssemblyFoldersExConditions)};
+            {RawFileName}; 
+            $(TargetDir) 
+        </ProjectDesignTimeAssemblyResolutionSearchPaths> 
+    </PropertyGroup>
+
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\XNA Game Studio\$(TargetFrameworkVersion)\Microsoft.Xna.GameStudio.Content.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\XNA Game Studio\$(TargetFrameworkVersion)\Microsoft.Xna.GameStudio.Content.targets')"/>    
     <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Phone.PostImport.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Phone.PostImport.targets')"/>
 
 </Project>
