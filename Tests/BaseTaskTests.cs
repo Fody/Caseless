@@ -7,6 +7,7 @@ public abstract class BaseTaskTests
     string projectPath;
     Assembly assembly;
     dynamic targetClass;
+    WeaverHelper weaverHelper;
 
     protected BaseTaskTests(string projectPath)
     {
@@ -22,7 +23,7 @@ public abstract class BaseTaskTests
     public void Setup()
     {
         Stopwatch startNew = Stopwatch.StartNew();
-        var weaverHelper = new WeaverHelper(projectPath);
+         weaverHelper = new WeaverHelper(projectPath);
         startNew .Stop();
         Debug.WriteLine(startNew.ElapsedMilliseconds);
         assembly = weaverHelper.Assembly;
@@ -105,7 +106,7 @@ public abstract class BaseTaskTests
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(assembly.CodeBase.Remove(0, 8));
+        Verifier.Verify(weaverHelper.BeforeAssemblyPath, weaverHelper.AfterAssemblyPath);
     }
 #endif
 
