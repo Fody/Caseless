@@ -1,8 +1,8 @@
-## This is an add-in for  [Fody](https://github.com/SimonCropp/Fody) 
+## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
 
 Change string comparisons to be case insensitive.
 
-[Introduction to Fody](https://github.com/SimonCropp/Fody/wiki/SampleUsage)
+[Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
 ## Nuget
 
@@ -26,6 +26,6 @@ Nuget package http://nuget.org/packages/Caseless.Fody
         return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
     }
 
-Other string comparison methods also get converted. See [ConvertedMethods](https://github.com/SimonCropp/Caseless/wiki/ConvertedMethods)
+Other string comparison methods also get converted. See [ConvertedMethods](https://github.com/Fody/Caseless/wiki/ConvertedMethods)
 
-To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see [DefaultStringComparison](https://github.com/SimonCropp/Caseless/wiki/DefaultStringComparison)
+To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see [DefaultStringComparison](https://github.com/Fody/Caseless/wiki/DefaultStringComparison)
