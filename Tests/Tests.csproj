@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,12 +95,46 @@
     <Compile Include="SL5WeavingTaskTests.cs" />
     <Compile Include="SL4WeavingTaskTests.cs" />
     <Compile Include="WeaverHelper.cs" />
-    <Compile Include="XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessDotNet3.5.csproj">
+      <Project>{9e726d5c-1ab1-4c07-8e8f-6930f35e6835}</Project>
+      <Name>AssemblyToProcessDotNet3.5</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessDotNet3.5Client.csproj">
+      <Project>{0552c0f4-7efe-48b5-b4ad-087d6355d6cf}</Project>
+      <Name>AssemblyToProcessDotNet3.5Client</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessDotNet4.csproj">
+      <Project>{7dec4e2d-f872-434e-a267-0bad65299950}</Project>
+      <Name>AssemblyToProcessDotNet4</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessDotNet4Client.csproj">
+      <Project>{b552d750-49fe-4db2-8c0b-37471ebe1f76}</Project>
+      <Name>AssemblyToProcessDotNet4Client</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessPhone.csproj">
+      <Project>{f883f209-8d17-4a30-8e6c-796219fbf408}</Project>
+      <Name>AssemblyToProcessPhone</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessSilverlight4.csproj">
+      <Project>{029b729e-217f-435e-b6f2-fef6fc0c8e8e}</Project>
+      <Name>AssemblyToProcessSilverlight4</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcessSilverlight5.csproj">
+      <Project>{f1bafce8-5cfb-4029-b943-3481cda40983}</Project>
+      <Name>AssemblyToProcessSilverlight5</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\Fody\Fody.csproj">
       <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
       <Name>Fody</Name>

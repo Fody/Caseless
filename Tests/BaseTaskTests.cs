@@ -1,33 +1,21 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using NUnit.Framework;
 
 public abstract class BaseTaskTests
 {
-    string projectPath;
+    string beforeAssemblyPath;
     Assembly assembly;
     dynamic targetClass;
-    WeaverHelper weaverHelper;
+    string afterAssemblyPath;
 
-    protected BaseTaskTests(string projectPath)
+    protected BaseTaskTests(string beforeAssemblyPath)
     {
-
+        this.beforeAssemblyPath = beforeAssemblyPath;
 #if (!DEBUG)
-
-            projectPath = projectPath.Replace("Debug", "Release");
+        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        this.projectPath = projectPath;
-    }
-
-    [TestFixtureSetUp]
-    public void Setup()
-    {
-        Stopwatch startNew = Stopwatch.StartNew();
-         weaverHelper = new WeaverHelper(projectPath);
-        startNew .Stop();
-        Debug.WriteLine(startNew.ElapsedMilliseconds);
-        assembly = weaverHelper.Assembly;
-
+        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
+        assembly = Assembly.LoadFrom(afterAssemblyPath);
         targetClass = assembly.GetInstance("TargetClass");
     }
 
@@ -106,7 +94,7 @@ public abstract class BaseTaskTests
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(weaverHelper.BeforeAssemblyPath, weaverHelper.AfterAssemblyPath);
+        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 #endif
 
