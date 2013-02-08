@@ -1,20 +1,34 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
+using Mono.Cecil;
 using NUnit.Framework;
 
-public abstract class BaseTaskTests
+[TestFixture]
+public class TaskTests
 {
     string beforeAssemblyPath;
     Assembly assembly;
     dynamic targetClass;
     string afterAssemblyPath;
 
-    protected BaseTaskTests(string beforeAssemblyPath)
+    public TaskTests()
     {
-        this.beforeAssemblyPath = beforeAssemblyPath;
+        beforeAssemblyPath = @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll";
 #if (!DEBUG)
-        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+       beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
+        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
+        File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
+
+        var moduleDefinition = ModuleDefinition.ReadModule(afterAssemblyPath);
+
+        var weavingTask = new ModuleWeaver
+            {
+                ModuleDefinition = moduleDefinition,
+            };
+
+        weavingTask.Execute();
+        moduleDefinition.Write(afterAssemblyPath);
         assembly = Assembly.LoadFrom(afterAssemblyPath);
         targetClass = assembly.GetInstance("TargetClass");
     }

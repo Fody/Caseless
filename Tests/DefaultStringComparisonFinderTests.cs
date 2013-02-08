@@ -7,7 +7,7 @@ public class DefaultStringComparisonFinderTests
     [Test]
     public void GetStringComparisonFromXml()
     {
-        var xElement = XElement.Parse(@"<Caseless StringComparison=""InvariantCultureIgnoreCase""/>");
+        var xElement = XElement.Parse("<Caseless StringComparison='InvariantCultureIgnoreCase'/>");
         Assert.AreEqual("InvariantCultureIgnoreCase", DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
     }
 
@@ -21,7 +21,7 @@ public class DefaultStringComparisonFinderTests
     [ExpectedException(typeof (WeavingException))]
     public void GetStringComparisonFromXmlWhiteSpace()
     {
-        var xElement = XElement.Parse(@"<Caseless StringComparison=""  ""/>");
+        var xElement = XElement.Parse("<Caseless StringComparison='  '/>");
         DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement);
     }
 
@@ -29,7 +29,7 @@ public class DefaultStringComparisonFinderTests
     [ExpectedException(typeof (WeavingException))]
     public void GetStringComparisonFromXmlEmpty()
     {
-        var xElement = XElement.Parse(@"<Caseless StringComparison=""""/>");
+        var xElement = XElement.Parse("<Caseless StringComparison=''/>");
         DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement);
     }
 }

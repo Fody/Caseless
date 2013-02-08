@@ -24,19 +24,16 @@ public class LargeAssemblyTest
 
     public void VerifyAssembly(string assemblyPath)
     {
-
         Debug.WriteLine("Verifying " + assemblyPath);
         var cleanAssembly = assemblyPath.Replace(".dll", "2.dll");
         var newAssembly = assemblyPath.Replace(".dll", "3.dll");
         File.Copy(assemblyPath, cleanAssembly, true);
         File.Copy(assemblyPath, newAssembly, true);
 
-        var assemblyResolver = new DotNet4AssemblyResolver();
         var moduleDefinition = ModuleDefinition.ReadModule(cleanAssembly);
         var weavingTask = new ModuleWeaver
             {
                 ModuleDefinition = moduleDefinition,
-               // AssemblyResolver = assemblyResolver,
             };
         moduleDefinition.Write(cleanAssembly);
 
