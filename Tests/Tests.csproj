@@ -81,11 +81,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="DefaultStringComparisonFinderTests.cs" />
     <Compile Include="LargeAssemblyTest.cs" />
     <Compile Include="Verifier.cs" />
-    <Compile Include="TaskTests.cs" />
+    <Compile Include="ModuleWeaverTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

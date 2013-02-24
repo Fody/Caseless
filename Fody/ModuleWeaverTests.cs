@@ -1,17 +1,18 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using Mono.Cecil;
 using NUnit.Framework;
 
 [TestFixture]
-public class TaskTests
+public class ModuleWeaverTests
 {
     string beforeAssemblyPath;
     Assembly assembly;
     dynamic targetClass;
     string afterAssemblyPath;
 
-    public TaskTests()
+    public ModuleWeaverTests()
     {
         beforeAssemblyPath = @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll";
 #if (!DEBUG)
@@ -30,7 +31,8 @@ public class TaskTests
         weavingTask.Execute();
         moduleDefinition.Write(afterAssemblyPath);
         assembly = Assembly.LoadFrom(afterAssemblyPath);
-        targetClass = assembly.GetInstance("TargetClass");
+        var type = assembly.GetType("TargetClass", true);
+        targetClass = Activator.CreateInstance(type);
     }
 
 
