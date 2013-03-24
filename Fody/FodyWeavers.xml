@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Weavers>
-  <Scalpel RemoveReferences="Microsoft.Build.Utilities.v4.0" />
+  <Scalpel />
   <Stamp />
 </Weavers>
