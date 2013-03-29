@@ -8,6 +8,10 @@ Change string comparisons to be case insensitive.
 
 Nuget package http://nuget.org/packages/Caseless.Fody 
 
+To Install from the Nuget Package Manager Console 
+    
+    PM> Install-Package Caseless.Fody
+
 ## Your Code
 
     public bool Foo()
