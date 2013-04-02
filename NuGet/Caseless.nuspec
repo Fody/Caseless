@@ -9,8 +9,8 @@
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
     <projectUrl>http://github.com/Fody/Caseless</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <iconUrl>https://raw.github.com/Fody/Caseless/master/Icons/package_icon.png</iconUrl>
     <description>Changes string comparisons to case insensitive.</description>
-    <summary />
     <language>en-AU</language>
     <tags>String, Case Insensitive, ILWeaving, Fody, Cecil</tags>
     <dependencies>

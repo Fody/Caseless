@@ -33,3 +33,7 @@ To Install from the Nuget Package Manager Console
 Other string comparison methods also get converted. See [ConvertedMethods](https://github.com/Fody/Caseless/wiki/ConvertedMethods)
 
 To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see [DefaultStringComparison](https://github.com/Fody/Caseless/wiki/DefaultStringComparison)
+
+## Icon 
+
+<a href="http://thenounproject.com/noun/aardvark/#icon-No6982" target="_blank">Aardvark</a> designed by <a href="http://thenounproject.com/nmac" target="_blank">N J MacNeil</a> from The Noun Project
