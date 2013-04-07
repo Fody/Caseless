@@ -80,7 +80,7 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <Reference Include="Scalpel">
-      <HintPath>..\packages\Scalpel.Fody.0.10.1.2\Lib\NET40\Scalpel.dll</HintPath>
+      <HintPath>..\packages\Scalpel.Fody.0.10.2.0\Lib\NET40\Scalpel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -88,7 +88,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <None Include="Fody.targets" />
-    <None Include="FodyWeavers.xml" />
+    <None Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CecilExtensions.cs" />
