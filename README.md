@@ -1,5 +1,7 @@
 ## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
 
+![Icon](https://raw.github.com/Fody/Caseless/master/Icons/package_icon.png)
+
 Change string comparisons to be case insensitive.
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
