@@ -32,7 +32,37 @@ To Install from the Nuget Package Manager Console
         return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
     }
 
-Other string comparison methods also get converted. See [ConvertedMethods](https://github.com/Fody/Caseless/wiki/ConvertedMethods)
+## Converted Methods
+
+The following string methods get converted to their StringComparison equivalents.
+
+ * Equality http://msdn.microsoft.com/en-us/library/system.string.op_equality
+ * Inequality http://msdn.microsoft.com/en-us/library/system.string.op_inequality
+ * Equals(String) http://msdn.microsoft.com/en-us/library/858x0yyx
+ * Equals(String, String) http://msdn.microsoft.com/en-us/library/1hkt4325
+ * Compare(String,String) http://msdn.microsoft.com/en-us/library/84787k22
+ * CompareTo(String) http://msdn.microsoft.com/en-us/library/35f0x18w
+ * EndsWith(String) http://msdn.microsoft.com/en-us/library/2333wewz
+ * Contains(String) http://msdn.microsoft.com/en-us/library/dy85x1sa
+ * IndexOf(String) http://msdn.microsoft.com/en-us/library/k8b1470s
+ * IndexOf(String, Int) http://msdn.microsoft.com/en-us/library/7cct0x33
+ * IndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d93tkzah
+ * LastIndexOf(String) http://msdn.microsoft.com/en-us/library/1wdsy8fy
+ * LastIndexOf(String, Int) http://msdn.microsoft.com/en-us/library/bc3z4t9d
+ * LastIndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d0z3tk9t
+ * StartsWith(String) http://msdn.microsoft.com/en-us/library/baketfxw
+
+## Default String Comparison
+
+If your don't want to use StringComparison.OrdinalIgnoreCase then you can configure the addin inside the FodyWeavers.xml file.
+
+For example if you want to use StringComparison.InvariantCultureIgnoreCase then add the following to FodyWeavers.xml.
+
+    <?xml version="1.0" encoding="utf-8" ?>
+    <Weavers>
+        <Caseless StringComparison="InvariantCultureIgnoreCase"/>
+    </Weavers>
+
 
 To change the [StringComparison](http://msdn.microsoft.com/en-us/library/system.stringcomparison.aspx) used by default see [DefaultStringComparison](https://github.com/Fody/Caseless/wiki/DefaultStringComparison)
 
