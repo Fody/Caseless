@@ -7,18 +7,15 @@ using NUnit.Framework;
 [TestFixture]
 public class ModuleWeaverTests
 {
-    string beforeAssemblyPath;
-    Assembly assembly;
     dynamic targetClass;
-    string afterAssemblyPath;
 
     public ModuleWeaverTests()
     {
-        beforeAssemblyPath = @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll";
+        var beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
 #if (!DEBUG)
        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
+        var afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
         var moduleDefinition = ModuleDefinition.ReadModule(afterAssemblyPath);
@@ -30,7 +27,7 @@ public class ModuleWeaverTests
 
         weavingTask.Execute();
         moduleDefinition.Write(afterAssemblyPath);
-        assembly = Assembly.LoadFrom(afterAssemblyPath);
+        var assembly = Assembly.LoadFrom(afterAssemblyPath);
         var type = assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);
     }
@@ -41,6 +38,7 @@ public class ModuleWeaverTests
     {
         Assert.AreEqual(0,targetClass.CompareTo());
     }
+
     [Test]
     public void CompareStatic()
     {
@@ -52,16 +50,19 @@ public class ModuleWeaverTests
     {
         Assert.IsTrue(targetClass.Contains());
     }
+
     [Test]
     public void IndexOf()
     {
         Assert.AreEqual(0,targetClass.IndexOf());
     }
+
     [Test]
     public void IndexOf_StartIndex()
     {
         Assert.AreEqual(1, targetClass.IndexOf_StartIndex());
     }
+
     [Test]
     public void IndexOf_StartIndexCount()
     {
@@ -79,26 +80,31 @@ public class ModuleWeaverTests
     {
         Assert.IsTrue(targetClass.OpEquals());
     }
+
     [Test]
     public void OpNotEquals()
     {
         Assert.IsFalse(targetClass.OpNotEquals());
     }
+
     [Test]
     public void StartsWith()
     {
         Assert.IsTrue(targetClass.StartsWith());
     }
+
     [Test]
     public void EndsWith()
     {
         Assert.IsTrue(targetClass.EndsWith());
     }
+
     [Test]
     public void Equals()
     {
         Assert.IsTrue(targetClass.Equals());
     }
+
     [Test]
     public void EqualsStatic()
     {
