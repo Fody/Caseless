@@ -5,12 +5,13 @@ using Scalpel;
 [Remove]
 public static class StringExtensions
 {
-    public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
+    public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
+    public static string ReplaceCaseless(this string str, string oldValue, string newValue)
     {
         var sb = new StringBuilder();
 
         var previousIndex = 0;
-        var index = str.IndexOf(oldValue, comparison);
+        var index = str.IndexOf(oldValue, DefaultComparison);
         while (index != -1)
         {
             sb.Append(str.Substring(previousIndex, index - previousIndex));
@@ -18,7 +19,7 @@ public static class StringExtensions
             index += oldValue.Length;
 
             previousIndex = index;
-            index = str.IndexOf(oldValue, index, comparison);
+            index = str.IndexOf(oldValue, index, DefaultComparison);
         }
         sb.Append(str.Substring(previousIndex));
 
