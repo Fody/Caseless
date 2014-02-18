@@ -52,6 +52,37 @@ The following string methods get converted to their StringComparison equivalents
  * LastIndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d0z3tk9t
  * StartsWith(String) http://msdn.microsoft.com/en-us/library/baketfxw
 
+## What about `String.Replace`
+
+This is because there is no overload for a case insensitive replace in the .net framework. 
+
+Here is an extension method to achieve it manually. Take from [this StackOverflow answer](http://stackoverflow.com/a/244933/53158)
+ 
+```
+public static class StringExtensions
+{
+    public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
+    {
+        var sb = new StringBuilder();
+
+        var previousIndex = 0;
+        var index = str.IndexOf(oldValue, comparison);
+        while (index != -1)
+        {
+            sb.Append(str.Substring(previousIndex, index - previousIndex));
+            sb.Append(newValue);
+            index += oldValue.Length;
+
+            previousIndex = index;
+            index = str.IndexOf(oldValue, index, comparison);
+        }
+        sb.Append(str.Substring(previousIndex));
+
+        return sb.ToString();
+    }
+}
+```
+
 ## Default String Comparison
 
 If your don't want to use StringComparison.OrdinalIgnoreCase then you can configure the addin inside the FodyWeavers.xml file.
