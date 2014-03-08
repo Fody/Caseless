@@ -48,6 +48,12 @@ public class ModuleWeaverTests
     }
 
     [Test]
+    public void CompareStaticWithNull()
+    {
+        Assert.AreEqual(-1, targetClass.CompareStaticWithNull());
+    }
+
+    [Test]
     public void Contains()
     {
         Assert.IsTrue(targetClass.Contains());
@@ -84,9 +90,21 @@ public class ModuleWeaverTests
     }
 
     [Test]
+    public void OpEqualsWithNull()
+    {
+        Assert.IsFalse(targetClass.OpEqualsWithNull());
+    }
+
+    [Test]
     public void OpNotEquals()
     {
         Assert.IsFalse(targetClass.OpNotEquals());
+    }
+
+    [Test]
+    public void OpNotEqualsWithNull()
+    {
+        Assert.IsTrue(targetClass.OpNotEqualsWithNull());
     }
 
     [Test]
@@ -111,6 +129,12 @@ public class ModuleWeaverTests
     public void EqualsStatic()
     {
         Assert.IsTrue(targetClass.EqualsStatic());
+    }
+
+    [Test]
+    public void EqualsStaticWithNull()
+    {
+        Assert.IsFalse(targetClass.EqualsStaticWithNull());
     }
 
 

@@ -3,7 +3,7 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-public class EqualsConverter:IConverter
+public class StaticEqualsConverter:IConverter
 {
     MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
@@ -13,7 +13,7 @@ public class EqualsConverter:IConverter
     public void Init()
     {
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        reference = ModuleDefinition.Import(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "StringComparison")));
+        reference = ModuleDefinition.Import(methods.First(x => x.IsStatic && x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
@@ -24,10 +24,10 @@ public class EqualsConverter:IConverter
         }
 
         var parameters = method.Parameters;
-        if (parameters.Matches("String"))
+        if (parameters.Matches("String", "String"))
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
-            yield return Instruction.Create(OpCodes.Callvirt, reference); 
+            yield return Instruction.Create(OpCodes.Call, reference); 
         }
 
     }

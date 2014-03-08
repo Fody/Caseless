@@ -16,6 +16,13 @@ public class TargetClass
         return String.Compare(x, y);
     }
 
+    public int CompareStaticWithNull()
+    {
+        string x = null;
+        var y = "A";
+        return String.Compare(x, y);
+    }
+
     public bool EndsWith()
     {
         var x = "a";
@@ -41,6 +48,13 @@ public class TargetClass
     public bool EqualsStatic()
     {
         var x = "a";
+        var y = "A";
+        return string.Equals(x,y);
+    }
+
+    public bool EqualsStaticWithNull()
+    {
+        string x = null;
         var y = "A";
         return string.Equals(x,y);
     }
@@ -92,9 +106,23 @@ public class TargetClass
         return x == y;
     }
 
+    public bool OpEqualsWithNull()
+    {
+        string x = null;
+        var y = "A";
+        return x == y;
+    }
+
     public bool OpNotEquals()
     {
         var x = "a";
+        var y = "A";
+        return x != y;
+    }
+
+    public bool OpNotEqualsWithNull()
+    {
+        string x = null;
         var y = "A";
         return x != y;
     }
