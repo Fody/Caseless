@@ -6,12 +6,10 @@ Change string comparisons to be case insensitive.
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
-## Nuget
+## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/Caseless.Fody.svg?style=flat)](https://www.nuget.org/packages/Caseless.Fody/)
 
-Nuget package http://nuget.org/packages/Caseless.Fody 
+https://nuget.org/packages/Caseless.Fody/
 
-To Install from the Nuget Package Manager Console 
-    
     PM> Install-Package Caseless.Fody
 
 ## Your Code
