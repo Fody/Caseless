@@ -13,7 +13,7 @@ public class OpNotEqualsConverter : IConverter
     public void Init()
     {
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        reference = ModuleDefinition.Import(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
+        reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)

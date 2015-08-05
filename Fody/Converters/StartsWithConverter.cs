@@ -13,7 +13,7 @@ public class StartsWithConverter : IConverter
     public void Init()
     {
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        reference = ModuleDefinition.Import(methods.First(x => x.Name == "StartsWith" && x.Parameters.Matches("String", "StringComparison")));
+        reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "StartsWith" && x.Parameters.Matches("String", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)

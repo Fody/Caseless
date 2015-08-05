@@ -15,9 +15,9 @@ public class IndexOfConverter:IConverter
     public void Init()
     {
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        reference_String = ModuleDefinition.Import(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "StringComparison")));
-        reference_StringInt = ModuleDefinition.Import(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String","Int32", "StringComparison")));
-        reference_StringIntInt = ModuleDefinition.Import(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String","Int32", "Int32", "StringComparison")));
+        reference_String = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "StringComparison")));
+        reference_StringInt = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "Int32", "StringComparison")));
+        reference_StringIntInt = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "Int32", "Int32", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
