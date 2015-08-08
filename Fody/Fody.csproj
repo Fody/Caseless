@@ -112,11 +112,8 @@
     <None Include="NugetAssets\dotnet.targets">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NugetAssets\FodyWeavers.xml.install.xdt" />
-    <None Include="NugetAssets\FodyWeavers.xml.uninstall.xdt">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="NugetAssets\install.ps" />
+    <None Include="NugetAssets\uninstall.ps" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -136,8 +133,7 @@
     <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(OutputPath)Caseless.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\install.ps1" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\uninstall.ps1" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\dotnet.targets" DestinationFiles="$(SolutionDir)NuGetBuild\build\dotnet\Caseless.Fody.targets" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild" MetadataAssembly="$(OutputPath)Caseless.Fody.dll" />
   </Target>
