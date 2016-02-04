@@ -16,6 +16,9 @@ public class ConverterCache
             converter.MsCoreReferenceFinder = MsCoreReferenceFinder;
             converter.ModuleDefinition = ModuleDefinition;
             converter.StringComparisonConstant = DefaultStringComparisonFinder.StringComparisonConstant;
+            var equality = converter as IEqualityConverter;
+            if (equality != null)
+                equality.IsOrdinal = DefaultStringComparisonFinder.IsOrdinal;
             converter.Init();
             Converters.Add(converter);
         }

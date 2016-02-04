@@ -3,9 +3,9 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-public class StaticEqualsConverter : IConverter
+public class StaticEqualsConverter : IEqualityConverter
 {
-    bool isOrdinal;
+    public bool IsOrdinal { get; set; }
     MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
@@ -13,11 +13,8 @@ public class StaticEqualsConverter : IConverter
 
     public void Init()
     {
-        isOrdinal = ((int)MsCoreReferenceFinder.StringComparisonDefinition
-           .Fields.Single(f => f.Name == "Ordinal").Constant) == StringComparisonConstant;
-
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        if (isOrdinal)
+        if (IsOrdinal)
         {
             reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "op_Equality" && x.Parameters.Matches("String", "String")));
         }
@@ -39,7 +36,7 @@ public class StaticEqualsConverter : IConverter
             yield break;
         }
 
-        if (!isOrdinal)
+        if (!IsOrdinal)
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
         }
