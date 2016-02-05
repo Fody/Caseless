@@ -25,7 +25,7 @@ public class ModuleWeaverOrdinalTests
 
         var weavingTask = new ModuleWeaver
             {
-                Config = XElement.Parse(@"<Caseless StringComparison=""Ordinal""/>"),
+                Config = XElement.Parse(@"<Caseless StringComparison="" ordinal ""/>"),
                 ModuleDefinition = moduleDefinition,
             };
 
