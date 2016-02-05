@@ -18,6 +18,13 @@ public class DefaultStringComparisonFinderTests
     }
 
     [Test]
+    public void GetStringComparisonFromXmlTrim()
+    {
+        var xElement = XElement.Parse("<Caseless StringComparison=' InvariantCultureIgnoreCase '/>");
+        Assert.AreEqual("InvariantCultureIgnoreCase", DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
+    }
+
+    [Test]
     [ExpectedException(typeof (WeavingException))]
     public void GetStringComparisonFromXmlWhiteSpace()
     {
