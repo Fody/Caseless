@@ -45,6 +45,13 @@ public class TargetClass
         return x.Equals(y);
     }
 
+    public bool EqualsCallOnNull()
+    {
+        string x = null;
+        var y = "A";
+        return x.Equals(y);
+    }
+
     public bool EqualsStatic()
     {
         var x = "a";

@@ -1,92 +1,46 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
 using Mono.Cecil;
 using NUnit.Framework;
 
 [TestFixture]
-public class ModuleWeaverTests
+public class ModuleWeaverOperatorTests
 {
     dynamic targetClass;
     string afterAssemblyPath;
     string beforeAssemblyPath;
 
-    public ModuleWeaverTests()
+    public ModuleWeaverOperatorTests()
     {
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
 #if (!DEBUG)
        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
+        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "4.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
         var moduleDefinition = ModuleDefinition.ReadModule(afterAssemblyPath);
 
         var weavingTask = new ModuleWeaver
             {
+                Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
                 ModuleDefinition = moduleDefinition,
             };
 
         weavingTask.Execute();
+        moduleDefinition.Assembly.Name.Name += "ForOperator";
         moduleDefinition.Write(afterAssemblyPath);
         var assembly = Assembly.LoadFrom(afterAssemblyPath);
         var type = assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);
     }
 
-
-    [Test]
-    public void CompareTo()
-    {
-        Assert.AreEqual(0,targetClass.CompareTo());
-    }
-
-    [Test]
-    public void CompareStatic()
-    {
-        Assert.AreEqual(0,targetClass.CompareStatic());
-    }
-
-    [Test]
-    public void CompareStaticWithNull()
-    {
-        Assert.AreEqual(-1, targetClass.CompareStaticWithNull());
-    }
-
-    [Test]
-    public void Contains()
-    {
-        Assert.IsTrue(targetClass.Contains());
-    }
-
-    [Test]
-    public void IndexOf()
-    {
-        Assert.AreEqual(0,targetClass.IndexOf());
-    }
-
-    [Test]
-    public void IndexOf_StartIndex()
-    {
-        Assert.AreEqual(1, targetClass.IndexOf_StartIndex());
-    }
-
-    [Test]
-    public void IndexOf_StartIndexCount()
-    {
-        Assert.AreEqual(1, targetClass.IndexOf_StartIndexCount());
-    }
-
-    [Test]
-    public void LastIndexOf()
-    {
-        Assert.AreEqual(0,targetClass.LastIndexOf());
-    }
-
     [Test]
     public void OpEquals()
     {
-        Assert.IsTrue(targetClass.OpEquals());
+        Assert.IsFalse(targetClass.OpEquals());
     }
 
     [Test]
@@ -98,7 +52,7 @@ public class ModuleWeaverTests
     [Test]
     public void OpNotEquals()
     {
-        Assert.IsFalse(targetClass.OpNotEquals());
+        Assert.IsTrue(targetClass.OpNotEquals());
     }
 
     [Test]
@@ -108,34 +62,21 @@ public class ModuleWeaverTests
     }
 
     [Test]
-    public void StartsWith()
-    {
-        Assert.IsTrue(targetClass.StartsWith());
-    }
-
-    [Test]
-    public void EndsWith()
-    {
-        Assert.IsTrue(targetClass.EndsWith());
-    }
-
-    [Test]
     public void Equals()
     {
-        Assert.IsTrue(targetClass.Equals());
+        Assert.IsFalse(targetClass.Equals());
     }
 
     [Test]
-    [ExpectedException(typeof(NullReferenceException))]
     public void EqualsCallOnNull()
     {
-        targetClass.EqualsCallOnNull();
+        Assert.IsFalse(targetClass.EqualsCallOnNull());
     }
 
     [Test]
     public void EqualsStatic()
     {
-        Assert.IsTrue(targetClass.EqualsStatic());
+        Assert.IsFalse(targetClass.EqualsStatic());
     }
 
     [Test]

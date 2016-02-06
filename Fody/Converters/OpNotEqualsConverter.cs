@@ -3,8 +3,10 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-public class OpNotEqualsConverter : IConverter
+public class OpNotEqualsConverter : IEqualityConverter
 {
+    // if UseOperatorForOrdinal has value, it means we are using StringComparsion.Ordinal
+    public bool? UseOperatorForOrdinal { get; set; }
     MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
@@ -12,12 +14,22 @@ public class OpNotEqualsConverter : IConverter
 
     public void Init()
     {
+        if (UseOperatorForOrdinal.HasValue)
+        {
+            return;
+        }
+
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
         reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
     {
+        if (UseOperatorForOrdinal.HasValue)
+        {
+            yield break;
+        }
+
         if (method.Name != "op_Inequality")
         {
             yield break;
