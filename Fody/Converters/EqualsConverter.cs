@@ -5,6 +5,7 @@ using Mono.Cecil.Cil;
 
 public class EqualsConverter : IEqualityConverter
 {
+    // only if UseOperatorForOrdinal is true, then it means we are forcing a.Equals(b) being converted into a == b
     public bool? UseOperatorForOrdinal { get; set; }
     MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }

@@ -5,8 +5,9 @@ using Mono.Cecil.Cil;
 
 public class OpNotEqualsConverter : IEqualityConverter
 {
-    MethodReference reference;
+    // if UseOperatorForOrdinal has value, it means we are using StringComparsion.Ordinal
     public bool? UseOperatorForOrdinal { get; set; }
+    MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public int StringComparisonConstant { get; set; }
