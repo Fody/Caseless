@@ -1,6 +1,4 @@
-﻿using System;
-
-public class TargetClass
+﻿public class TargetClass
 {
     public int CompareTo()
     {
@@ -13,14 +11,14 @@ public class TargetClass
     {
         var x = "a";
         var y = "A";
-        return String.Compare(x, y);
+        return string.Compare(x, y);
     }
 
     public int CompareStaticWithNull()
     {
         string x = null;
         var y = "A";
-        return String.Compare(x, y);
+        return string.Compare(x, y);
     }
 
     public bool EndsWith()

@@ -78,10 +78,6 @@ public class ModuleWeaver
             {
                 continue;
             }
-            if (instruction.Operand == null)
-            {
-                continue;
-            }
             var methodReference = instruction.Operand as MethodReference;
             if (methodReference == null)
             {

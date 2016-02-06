@@ -16,7 +16,7 @@ public class ModuleWeaverOrdinalTests
     {
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
 #if (!DEBUG)
-       beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
         afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "3.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);

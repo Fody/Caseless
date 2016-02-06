@@ -7,14 +7,14 @@ public class TemplateClass
     {
         var x = "a";
         var y = "A";
-        return String.Compare(x, y, StringComparison.OrdinalIgnoreCase);
+        return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
     }
 
     public int CompareStatic()
     {
         var x = "a";
         var y = "A";
-        return String.Compare(x, y, StringComparison.OrdinalIgnoreCase);
+        return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
     }
 
 

@@ -7,14 +7,14 @@ public class TemplateClassForOperator
     {
         var x = "a";
         var y = "A";
-        return String.Compare(x, y, StringComparison.Ordinal);
+        return string.Compare(x, y, StringComparison.Ordinal);
     }
 
     public int CompareStatic()
     {
         var x = "a";
         var y = "A";
-        return String.Compare(x, y, StringComparison.Ordinal);
+        return string.Compare(x, y, StringComparison.Ordinal);
     }
 
 

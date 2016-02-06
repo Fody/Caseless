@@ -6,7 +6,7 @@ public static class CecilExtensions
 
     public static bool Matches(this Collection<ParameterDefinition> parameters, params string[] matches)
     {
-        if(parameters.Count!= matches.Length)
+        if (parameters.Count != matches.Length)
         {
             return false;
         }

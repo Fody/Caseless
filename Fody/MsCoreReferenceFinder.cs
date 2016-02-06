@@ -4,17 +4,16 @@ using Mono.Cecil;
 
 public class MsCoreReferenceFinder
 {
-   public IAssemblyResolver AssemblyResolver;
+    public IAssemblyResolver AssemblyResolver;
     public TypeDefinition StringDefinition;
     public TypeDefinition StringComparisonDefinition;
-
 
     public void Execute()
     {
         var coreTypes = new List<TypeDefinition>();
         AppendTypes("mscorlib", coreTypes);
         AppendTypes("System.Runtime", coreTypes);
-        
+
         StringDefinition = coreTypes.First(x => x.Name == "String");
         StringComparisonDefinition = coreTypes.First(x => x.Name == "StringComparison");
     }

@@ -32,18 +32,14 @@ public class DefaultStringComparisonFinder
 
         if (fieldDefinitions == null)
         {
-            throw new WeavingException(string.Format("Could not find value '{0}' in type 'System.StringComparison'. Please check your configuration.", name));
+            throw new WeavingException($"Could not find value '{name}' in type 'System.StringComparison'. Please check your configuration.");
         }
         StringComparisonConstant = (int)fieldDefinitions.Constant;
     }
 
     public static string GetStringComparisonFromXml(XElement xElement)
     {
-        if (xElement == null)
-        {
-            return "OrdinalIgnoreCase";
-        }
-        var xAttribute = xElement.Attribute("StringComparison");
+        var xAttribute = xElement?.Attribute("StringComparison");
         if (xAttribute == null)
         {
             return "OrdinalIgnoreCase";
