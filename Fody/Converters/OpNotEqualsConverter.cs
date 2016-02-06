@@ -6,14 +6,14 @@ using Mono.Cecil.Cil;
 public class OpNotEqualsConverter : IEqualityConverter
 {
     MethodReference reference;
-    public bool IsOrdinal { get; set; }
+    public bool? UseOperatorForOrdinal { get; set; }
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public int StringComparisonConstant { get; set; }
 
     public void Init()
     {
-        if (IsOrdinal)
+        if (UseOperatorForOrdinal.HasValue)
         {
             return;
         }
@@ -24,7 +24,7 @@ public class OpNotEqualsConverter : IEqualityConverter
 
     public IEnumerable<Instruction> Convert(MethodReference method)
     {
-        if (IsOrdinal)
+        if (UseOperatorForOrdinal.HasValue)
         {
             yield break;
         }

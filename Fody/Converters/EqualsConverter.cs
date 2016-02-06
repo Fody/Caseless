@@ -5,7 +5,7 @@ using Mono.Cecil.Cil;
 
 public class EqualsConverter : IEqualityConverter
 {
-    public bool IsOrdinal { get; set; }
+    public bool? UseOperatorForOrdinal { get; set; }
     MethodReference reference;
     public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
@@ -14,7 +14,7 @@ public class EqualsConverter : IEqualityConverter
     public void Init()
     {
         var methods = MsCoreReferenceFinder.StringDefinition.Methods;
-        if (IsOrdinal)
+        if (UseOperatorForOrdinal.GetValueOrDefault())
         {
             reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "op_Equality" && x.Parameters.Matches("String", "String")));
         }
@@ -36,7 +36,7 @@ public class EqualsConverter : IEqualityConverter
             yield break;
         }
 
-        if (IsOrdinal)
+        if (UseOperatorForOrdinal.GetValueOrDefault())
         {
             yield return Instruction.Create(OpCodes.Call, reference);
         }

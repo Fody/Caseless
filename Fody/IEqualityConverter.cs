@@ -1,4 +1,4 @@
 public interface IEqualityConverter : IConverter
 {
-    bool IsOrdinal { get; set; }
+    bool? UseOperatorForOrdinal { get; set; }
 }

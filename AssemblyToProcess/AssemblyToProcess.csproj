@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="ClassWithExpression.cs" />
     <Compile Include="TargetClass.cs" />
+    <Compile Include="TemplateClassForOperator.cs" />
+    <Compile Include="TemplateClassForOrdinal.cs" />
     <Compile Include="TemplateClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

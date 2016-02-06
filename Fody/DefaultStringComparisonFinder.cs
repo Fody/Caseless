@@ -7,12 +7,23 @@ public class DefaultStringComparisonFinder
     public MsCoreReferenceFinder MsCoreReferenceFinder;
     public ModuleWeaver ModuleWeaver;
     public int StringComparisonConstant;
-    public bool IsOrdinal;
+    public bool? UseOperatorForOrdinal;
 
     public void Execute()
     {
         var name = GetStringComparisonFromXml(ModuleWeaver.Config);
-        IsOrdinal = name.Equals("Ordinal", StringComparison.OrdinalIgnoreCase);
+
+        switch (name.ToUpperInvariant())
+        {
+            case "OPERATOR":
+            case "OPERATORS":
+                UseOperatorForOrdinal = true;   // force a.Equals(b) being converted to a == b
+                name = "Ordinal";               // everything else will use StringComparison.Ordinal
+                break;
+            case "ORDINAL":
+                UseOperatorForOrdinal = false;  // leave force a.Equals(b) alone, it becomes a.Equals(b, StringComparison.Ordinal)
+                break;
+        }
 
         var fieldDefinitions = MsCoreReferenceFinder
             .StringComparisonDefinition

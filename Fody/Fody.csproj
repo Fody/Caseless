@@ -84,6 +84,7 @@
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="Converters\StaticEqualsConverter.cs" />
     <Compile Include="IEqualityConverter.cs" />
+    <Compile Include="ModuleWeaverOperatorTests.cs" />
     <Compile Include="ModuleWeaverOrdinalTests.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Converters\CompareConverter.cs" />

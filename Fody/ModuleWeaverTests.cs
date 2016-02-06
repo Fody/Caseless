@@ -126,6 +126,13 @@ public class ModuleWeaverTests
     }
 
     [Test]
+    [ExpectedException(typeof(NullReferenceException))]
+    public void EqualsCallOnNull()
+    {
+        targetClass.EqualsCallOnNull();
+    }
+
+    [Test]
     public void EqualsStatic()
     {
         Assert.IsTrue(targetClass.EqualsStatic());

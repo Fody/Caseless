@@ -6,31 +6,31 @@ using Mono.Cecil;
 using NUnit.Framework;
 
 [TestFixture]
-public class ModuleWeaverOrdinalTests
+public class ModuleWeaverOperatorTests
 {
     dynamic targetClass;
     string afterAssemblyPath;
     string beforeAssemblyPath;
 
-    public ModuleWeaverOrdinalTests()
+    public ModuleWeaverOperatorTests()
     {
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
 #if (!DEBUG)
        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "3.dll");
+        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "4.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
         var moduleDefinition = ModuleDefinition.ReadModule(afterAssemblyPath);
 
         var weavingTask = new ModuleWeaver
             {
-                Config = XElement.Parse(@"<Caseless StringComparison="" ordinal ""/>"),
+                Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
                 ModuleDefinition = moduleDefinition,
             };
 
         weavingTask.Execute();
-        moduleDefinition.Assembly.Name.Name += "ForOrdinal";
+        moduleDefinition.Assembly.Name.Name += "ForOperator";
         moduleDefinition.Write(afterAssemblyPath);
         var assembly = Assembly.LoadFrom(afterAssemblyPath);
         var type = assembly.GetType("TargetClass", true);
@@ -68,10 +68,9 @@ public class ModuleWeaverOrdinalTests
     }
 
     [Test]
-    [ExpectedException(typeof(NullReferenceException))]
     public void EqualsCallOnNull()
     {
-        targetClass.EqualsCallOnNull();
+        Assert.IsFalse(targetClass.EqualsCallOnNull());
     }
 
     [Test]

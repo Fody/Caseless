@@ -18,7 +18,7 @@ public class ConverterCache
             converter.StringComparisonConstant = DefaultStringComparisonFinder.StringComparisonConstant;
             var equality = converter as IEqualityConverter;
             if (equality != null)
-                equality.IsOrdinal = DefaultStringComparisonFinder.IsOrdinal;
+                equality.UseOperatorForOrdinal = DefaultStringComparisonFinder.UseOperatorForOrdinal;
             converter.Init();
             Converters.Add(converter);
         }
