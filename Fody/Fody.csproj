@@ -137,7 +137,8 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Caseless.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)Caseless.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" />
+    <Copy SourceFiles="$(OutputPath)Caseless.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" Condition="Exists('$(OutputPath)Caseless.Fody.pdb')" />
+    <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll.mdb" DestinationFolder="$(SolutionDir)NuGetBuild" Condition="Exists('$(OutputPath)Caseless.Fody.dll.mdb')" />
     <Copy SourceFiles="$(ProjectDir)NuGetAssets\Fody_ToBeDeleted.txt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\install.ps1" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\uninstall.ps1" />

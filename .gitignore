@@ -10,6 +10,7 @@
 *.user
 *.sln.docstates
 *.pidb
+*.userprefs
 
 # Build results
 [Dd]ebug/

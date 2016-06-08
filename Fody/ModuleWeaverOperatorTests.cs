@@ -14,7 +14,7 @@ public class ModuleWeaverOperatorTests
 
     public ModuleWeaverOperatorTests()
     {
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine("..", "..", "..", "AssemblyToProcess", "bin", "Debug", "AssemblyToProcess.dll"));
 #if (!DEBUG)
        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
