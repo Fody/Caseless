@@ -144,6 +144,11 @@ public class ModuleWeaverTests
         Assert.IsFalse(targetClass.EqualsStaticWithNull());
     }
 
+    [Test]
+    public void Conditional()
+    {
+        Assert.IsTrue(targetClass.ConditionalBranch());
+    }
 
 #if(DEBUG)
     [Test]

@@ -132,4 +132,11 @@
         return x != y;
     }
 
+    public bool ConditionalBranch()
+    {
+        string x = "foo";
+        string y = "F";
+        string z = "G";
+        return x.StartsWith (y ?? z);
+    }
 }

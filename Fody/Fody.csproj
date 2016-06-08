@@ -107,6 +107,7 @@
     <Compile Include="MsCoreReferenceFinder.cs" />
     <Compile Include="Verifier.cs" />
     <Compile Include="WeavingException.cs" />
+    <Compile Include="ModuleWeaverOperandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NugetAssets\Caseless.Fody.nuspec">

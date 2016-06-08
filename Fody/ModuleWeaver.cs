@@ -93,6 +93,10 @@ public class ModuleWeaver
                 var replaceWith = converter.Convert(methodReference).ToList();
                 if (replaceWith.Count > 0)
                 {
+                    foreach (var inst in instructions.Where(i => i.Operand == instruction))
+                    {
+                        inst.Operand = replaceWith[0];
+                    }
                     instructions.RemoveAt(index);
                     foreach (var innerInstruction in replaceWith)
                     {
