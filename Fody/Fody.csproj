@@ -12,7 +12,8 @@
     <AssemblyName>Caseless.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>09880dd3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,40 +38,23 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
-    <OutputPath>bin\Deployable\</OutputPath>
-    <DefineConstants>TRACE;Scalpel</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.2\lib\net40\Mono.Cecil.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.4\lib\net40\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.2\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.2\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.2\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Scalpel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=1d3f964f81f300dd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Scalpel.Fody.1.0.3.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\Scalpel.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -84,8 +68,6 @@
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="Converters\StaticEqualsConverter.cs" />
     <Compile Include="IEqualityConverter.cs" />
-    <Compile Include="ModuleWeaverOperatorTests.cs" />
-    <Compile Include="ModuleWeaverOrdinalTests.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Converters\CompareConverter.cs" />
     <Compile Include="ConverterCache.cs" />
@@ -98,16 +80,12 @@
     <Compile Include="ConverterTypes.cs" />
     <Compile Include="Converters\EndsWithConverter.cs" />
     <Compile Include="DefaultStringComparisonFinder.cs" />
-    <Compile Include="DefaultStringComparisonFinderTests.cs" />
     <Compile Include="IConverter.cs" />
     <Compile Include="Converters\EqualsConverter.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
-    <Compile Include="ModuleWeaverTests.cs" />
     <Compile Include="MsCoreReferenceFinder.cs" />
-    <Compile Include="Verifier.cs" />
     <Compile Include="WeavingException.cs" />
-    <Compile Include="ModuleWeaverOperandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NugetAssets\Caseless.Fody.nuspec">
@@ -115,13 +93,9 @@
     </None>
     <None Include="NugetAssets\install.ps" />
     <None Include="NugetAssets\uninstall.ps" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj">
-      <Project>{7dec4e2d-f872-434e-a267-0bad65299950}</Project>
-      <Name>AssemblyToProcess</Name>
-    </ProjectReference>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="NugetAssets\Fody_ToBeDeleted.txt" />
@@ -150,8 +124,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" />
-  <Import Project="..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
 </Project>

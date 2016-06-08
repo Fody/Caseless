@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
@@ -12,7 +13,10 @@ public class ModuleWeaverOperandTests
 
     public ModuleWeaverOperandTests()
     {
-        var beforeAssemblyPath = "AssemblyToProcess.dll";
+        var beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
+#if (!DEBUG)
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+#endif
         var afterAssemblyPath = typeof(ModuleWeaverOperandTests).Name + ".dll";
 
         var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath);
@@ -23,9 +27,9 @@ public class ModuleWeaverOperandTests
         moduleDefinition.Write(afterAssemblyPath);
 
         var weavingTask = new ModuleWeaver
-            {
-                ModuleDefinition = moduleDefinition,
-            };
+        {
+            ModuleDefinition = moduleDefinition,
+        };
         weavingTask.Execute();
 
         moduleDefinition.Assembly.Name.Name += "ForOperand";
@@ -35,7 +39,7 @@ public class ModuleWeaverOperandTests
         targetClass = Activator.CreateInstance(type);
     }
 
-    private static void AddConditionalBranchLong(ModuleDefinition module, TypeDefinition type)
+    static void AddConditionalBranchLong(ModuleDefinition module, TypeDefinition type)
     {
         var method = new MethodDefinition("ConditionalBranchLong", Mono.Cecil.MethodAttributes.Public, module.TypeSystem.Boolean);
         var body = method.Body;
@@ -43,7 +47,7 @@ public class ModuleWeaverOperandTests
         var il = body.GetILProcessor();
 
         // This is the key: a call which will be replaced, targeted by a branch
-        var call = il.Create(OpCodes.Callvirt, module.ImportReference(typeof(String).GetMethod("StartsWith", new[] { typeof(string) })));
+        var call = il.Create(OpCodes.Callvirt, module.ImportReference(typeof(string).GetMethod("StartsWith", new[] {typeof(string)})));
         var branch = il.Create(OpCodes.Brtrue, call);
 
         il.Append(il.Create(OpCodes.Ldstr, "foo"));
@@ -55,12 +59,12 @@ public class ModuleWeaverOperandTests
         il.Append(call);
         il.Append(il.Create(OpCodes.Ret));
 
-		type.Methods.Add(method);
-	}
+        type.Methods.Add(method);
+    }
 
-	[Test]
-	public void Conditional()
-	{
-		Assert.IsTrue(targetClass.ConditionalBranchLong());
-	}
+    [Test]
+    public void Conditional()
+    {
+        Assert.IsTrue(targetClass.ConditionalBranchLong());
+    }
 }

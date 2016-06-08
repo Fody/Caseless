@@ -134,9 +134,9 @@
 
     public bool ConditionalBranch()
     {
-        string x = "foo";
-        string y = "F";
-        string z = "G";
+        var x = "foo";
+        var y = "F";
+        var z = "G";
         return x.StartsWith (y ?? z);
     }
 }

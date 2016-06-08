@@ -14,9 +14,9 @@ public class ModuleWeaverOperatorTests
 
     public ModuleWeaverOperatorTests()
     {
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine("..", "..", "..", "AssemblyToProcess", "bin", "Debug", "AssemblyToProcess.dll"));
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
 #if (!DEBUG)
-       beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
         afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "4.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
@@ -24,10 +24,10 @@ public class ModuleWeaverOperatorTests
         var moduleDefinition = ModuleDefinition.ReadModule(afterAssemblyPath);
 
         var weavingTask = new ModuleWeaver
-            {
-                Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
-                ModuleDefinition = moduleDefinition,
-            };
+        {
+            Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
+            ModuleDefinition = moduleDefinition,
+        };
 
         weavingTask.Execute();
         moduleDefinition.Assembly.Name.Name += "ForOperator";

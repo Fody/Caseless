@@ -14,7 +14,10 @@ public class ModuleWeaverOrdinalTests
 
     public ModuleWeaverOrdinalTests()
     {
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine("..", "..", "..", "AssemblyToProcess", "bin", "Debug", "AssemblyToProcess.dll"));
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
+#if (!DEBUG)
+       beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+#endif
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
@@ -68,10 +71,9 @@ public class ModuleWeaverOrdinalTests
     }
 
     [Test]
-    [ExpectedException(typeof(NullReferenceException))]
     public void EqualsCallOnNull()
     {
-        targetClass.EqualsCallOnNull();
+     Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
     }
 
     [Test]

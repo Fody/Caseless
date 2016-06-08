@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Text;
-using Scalpel;
 
-[Remove]
 public static class StringExtensions
 {
     public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
