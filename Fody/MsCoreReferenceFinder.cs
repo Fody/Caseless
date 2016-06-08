@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
@@ -12,12 +13,14 @@ public class MsCoreReferenceFinder
     {
         var coreTypes = new List<TypeDefinition>();
         AppendTypes("mscorlib", coreTypes);
-        AppendTypes("System.Runtime", coreTypes);
+        if (null == Type.GetType("Mono.Runtime"))
+        {
+            AppendTypes("System.Runtime", coreTypes);
+        }
 
         StringDefinition = coreTypes.First(x => x.Name == "String");
         StringComparisonDefinition = coreTypes.First(x => x.Name == "StringComparison");
     }
-
 
     void AppendTypes(string name, List<TypeDefinition> coreTypes)
     {
