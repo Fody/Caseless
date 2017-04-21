@@ -24,7 +24,7 @@ public class MsCoreReferenceFinder
 
     void AppendTypes(string name, List<TypeDefinition> coreTypes)
     {
-        var definition = AssemblyResolver.Resolve(name);
+        var definition = AssemblyResolver.Resolve(new AssemblyNameDefinition(name, null));
         if (definition != null)
         {
             coreTypes.AddRange(definition.MainModule.Types);
