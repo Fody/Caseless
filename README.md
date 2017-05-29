@@ -1,4 +1,4 @@
-[![Chat on Gitter Status](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
 [![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
 
 
@@ -26,6 +26,7 @@ https://nuget.org/packages/Caseless.Fody/
         var y = "A";
         return x == y;
     }
+
 
 ## What gets compiled
 
