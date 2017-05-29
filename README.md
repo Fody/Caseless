@@ -1,3 +1,7 @@
+[![Chat on Gitter Status](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
+[![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
+
+
 ## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
 
 ![Icon](https://raw.github.com/Fody/Caseless/master/Icons/package_icon.png)
@@ -6,11 +10,13 @@ Change string comparisons to be case insensitive.
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
-## The nuget package  [![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
+
+## The nuget package
 
 https://nuget.org/packages/Caseless.Fody/
 
     PM> Install-Package Caseless.Fody
+
 
 ## Your Code
 
@@ -29,6 +35,7 @@ https://nuget.org/packages/Caseless.Fody/
         var y = "A";
         return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
     }
+
 
 ## Converted Methods
 
@@ -49,6 +56,7 @@ The following string methods get converted to their StringComparison equivalents
  * LastIndexOf(String, Int) http://msdn.microsoft.com/en-us/library/bc3z4t9d
  * LastIndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d0z3tk9t
  * StartsWith(String) http://msdn.microsoft.com/en-us/library/baketfxw
+
 
 ## What about `String.Replace`
 
@@ -82,6 +90,7 @@ public static class StringExtensions
 }
 ```
 
+
 ## Default String Comparison
 
 If your don't want to use StringComparison.OrdinalIgnoreCase then you can configure the addin inside the FodyWeavers.xml file.
@@ -92,6 +101,7 @@ For example if you want to use StringComparison.InvariantCultureIgnoreCase then 
     <Weavers>
         <Caseless StringComparison="InvariantCultureIgnoreCase"/>
     </Weavers>
+
 
 ## Icon 
 
