@@ -8,13 +8,13 @@ public class StaticEqualsConverter : IEqualityConverter
     // if UseOperatorForOrdinal has value, it means we are using StringComparison.Ordinal
     public bool? UseOperatorForOrdinal { get; set; }
     MethodReference reference;
-    public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
+    public ModuleWeaver ModuleWeaver { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public int StringComparisonConstant { get; set; }
 
     public void Init()
     {
-        var methods = MsCoreReferenceFinder.StringDefinition.Methods;
+        var methods = ModuleWeaver.StringDefinition.Methods;
         if (UseOperatorForOrdinal.HasValue)
         {
             reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "op_Equality" && x.Parameters.Matches("String", "String")));

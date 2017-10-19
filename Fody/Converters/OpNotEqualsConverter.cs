@@ -8,7 +8,7 @@ public class OpNotEqualsConverter : IEqualityConverter
     // if UseOperatorForOrdinal has value, it means we are using StringComparison.Ordinal
     public bool? UseOperatorForOrdinal { get; set; }
     MethodReference reference;
-    public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
+    public ModuleWeaver ModuleWeaver { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public int StringComparisonConstant { get; set; }
 
@@ -19,7 +19,7 @@ public class OpNotEqualsConverter : IEqualityConverter
             return;
         }
 
-        var methods = MsCoreReferenceFinder.StringDefinition.Methods;
+        var methods = ModuleWeaver.StringDefinition.Methods;
         reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
     }
 

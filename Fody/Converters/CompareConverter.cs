@@ -6,13 +6,13 @@ using Mono.Cecil.Cil;
 public class CompareConverter : IConverter
 {
     MethodReference reference;
-    public MsCoreReferenceFinder MsCoreReferenceFinder { get; set; }
+    public ModuleWeaver ModuleWeaver { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public int StringComparisonConstant { get; set; }
 
     public void Init()
     {
-        var methods = MsCoreReferenceFinder.StringDefinition.Methods;
+        var methods = ModuleWeaver.StringDefinition.Methods;
         reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Compare" && x.Parameters.Matches("String", "String", "StringComparison")));
     }
 

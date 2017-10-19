@@ -4,7 +4,6 @@ using System.Xml.Linq;
 
 public class DefaultStringComparisonFinder
 {
-    public MsCoreReferenceFinder MsCoreReferenceFinder;
     public ModuleWeaver ModuleWeaver;
     public int StringComparisonConstant;
     public bool? UseOperatorForOrdinal;
@@ -25,7 +24,7 @@ public class DefaultStringComparisonFinder
                 break;
         }
 
-        var fieldDefinitions = MsCoreReferenceFinder
+        var fieldDefinitions = ModuleWeaver
             .StringComparisonDefinition
             .Fields
             .FirstOrDefault(x => name.Equals(x.Name, StringComparison.OrdinalIgnoreCase));

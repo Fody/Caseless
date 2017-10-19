@@ -4,7 +4,7 @@ using Mono.Cecil;
 
 public class ConverterCache
 {
-    public MsCoreReferenceFinder MsCoreReferenceFinder;
+    public ModuleWeaver ModuleWeaver;
     public ModuleDefinition ModuleDefinition;
     public DefaultStringComparisonFinder DefaultStringComparisonFinder;
     public void Execute()
@@ -13,7 +13,7 @@ public class ConverterCache
         foreach (var type in ConverterTypes.Types)
         {
             var converter = (IConverter) Activator.CreateInstance(type);
-            converter.MsCoreReferenceFinder = MsCoreReferenceFinder;
+            converter.ModuleWeaver = ModuleWeaver;
             converter.ModuleDefinition = ModuleDefinition;
             converter.StringComparisonConstant = DefaultStringComparisonFinder.StringComparisonConstant;
             if (converter is IEqualityConverter equality)

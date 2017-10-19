@@ -4,7 +4,7 @@ using Mono.Cecil.Cil;
 
 public interface IConverter
 {
-    MsCoreReferenceFinder MsCoreReferenceFinder { set; }
+    ModuleWeaver ModuleWeaver { set; }
     ModuleDefinition ModuleDefinition { get; set; }
     int StringComparisonConstant { get; set; }
     void Init();

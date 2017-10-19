@@ -5,13 +5,12 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
-public class ModuleWeaver
+public partial class ModuleWeaver
 {
     public Action<string> LogInfo { get; set; }
     public Action<string> LogWarning { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     public XElement Config { get; set; }
-    MsCoreReferenceFinder msCoreReferenceFinder;
     ConverterCache converterCache;
 
     public ModuleWeaver()
@@ -22,20 +21,15 @@ public class ModuleWeaver
 
     public void Execute()
     {
-        msCoreReferenceFinder = new MsCoreReferenceFinder
-                                        {
-                                            AssemblyResolver = ModuleDefinition.AssemblyResolver,
-                                        };
-        msCoreReferenceFinder.Execute();
+        FindCoreReferences();
         var comparisonFinder = new DefaultStringComparisonFinder
                                    {
-                                       ModuleWeaver = this,
-                                       MsCoreReferenceFinder = msCoreReferenceFinder,
+                                       ModuleWeaver = this
                                    };
         comparisonFinder.Execute();
         converterCache = new ConverterCache
                              {
-                                 MsCoreReferenceFinder = msCoreReferenceFinder,
+                                 ModuleWeaver = this,
                                  ModuleDefinition = ModuleDefinition,
                                  DefaultStringComparisonFinder = comparisonFinder
                              };

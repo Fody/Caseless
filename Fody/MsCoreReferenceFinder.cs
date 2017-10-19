@@ -1,33 +1,39 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 
-public class MsCoreReferenceFinder
+public partial class ModuleWeaver
 {
-    public IAssemblyResolver AssemblyResolver;
     public TypeDefinition StringDefinition;
     public TypeDefinition StringComparisonDefinition;
 
-    public void Execute()
+    public void FindCoreReferences()
     {
         var coreTypes = new List<TypeDefinition>();
-        AppendTypes("mscorlib", coreTypes);
-        if (null == Type.GetType("Mono.Runtime"))
-        {
-            AppendTypes("System.Runtime", coreTypes);
-        }
+        AddAssemblyIfExists("mscorlib", coreTypes);
+        AddAssemblyIfExists("System", coreTypes);
+        AddAssemblyIfExists("System.Runtime", coreTypes);
+        AddAssemblyIfExists("System.Core", coreTypes);
+        AddAssemblyIfExists("netstandard", coreTypes);
 
         StringDefinition = coreTypes.First(x => x.Name == "String");
         StringComparisonDefinition = coreTypes.First(x => x.Name == "StringComparison");
     }
 
-    void AppendTypes(string name, List<TypeDefinition> coreTypes)
+    void AddAssemblyIfExists(string name, List<TypeDefinition> types)
     {
-        var definition = AssemblyResolver.Resolve(new AssemblyNameDefinition(name, null));
-        if (definition != null)
+        try
         {
-            coreTypes.AddRange(definition.MainModule.Types);
+            var msCoreLibDefinition = ModuleDefinition.AssemblyResolver.Resolve(new AssemblyNameReference(name, null));
+
+            if (msCoreLibDefinition != null)
+            {
+                types.AddRange(msCoreLibDefinition.MainModule.Types);
+            }
+        }
+        catch (AssemblyResolutionException)
+        {
+            LogInfo($"Failed to resolve '{name}'. So skipping its types.");
         }
     }
 
