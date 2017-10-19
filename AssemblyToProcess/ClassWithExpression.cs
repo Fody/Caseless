@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-public class ClassWithExpression 
+public class ClassWithExpression
 {
     public ClassWithExpression()
     {
@@ -11,5 +11,4 @@ public class ClassWithExpression
         Func<ClassWithExpression, bool> func = x => s == "A";
         // ReSharper restore UnusedVariable
     }
-
 }

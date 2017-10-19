@@ -1,126 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Caseless.Fody</RootNamespace>
+    <TargetFrameworks>net452</TargetFrameworks>
     <AssemblyName>Caseless.Fody</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <PackageReference Include="FodyCecil" Version="2.*" />
+    <PackageReference Include="PepitaPackage" Version="*" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CecilExtensions.cs" />
-    <Compile Include="Converters\StaticEqualsConverter.cs" />
-    <Compile Include="IEqualityConverter.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="Converters\CompareConverter.cs" />
-    <Compile Include="ConverterCache.cs" />
-    <Compile Include="Converters\ContainsConverter.cs" />
-    <Compile Include="Converters\IndexOfConverter.cs" />
-    <Compile Include="Converters\LastIndexOfConverter.cs" />
-    <Compile Include="Converters\OpEqualsConverter.cs" />
-    <Compile Include="Converters\OpNotEqualsConverter.cs" />
-    <Compile Include="Converters\StartsWithConverter.cs" />
-    <Compile Include="ConverterTypes.cs" />
-    <Compile Include="Converters\EndsWithConverter.cs" />
-    <Compile Include="DefaultStringComparisonFinder.cs" />
-    <Compile Include="IConverter.cs" />
-    <Compile Include="Converters\EqualsConverter.cs" />
-    <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
-    <Compile Include="MsCoreReferenceFinder.cs" />
-    <Compile Include="WeavingException.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="NugetAssets\Caseless.Fody.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="NugetAssets\install.ps" />
-    <None Include="NugetAssets\uninstall.ps" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NugetAssets\Fody_ToBeDeleted.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
+  <Target Name="MergeDependencies" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(Configuration)' == 'Release'">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NuGetBuild\**\*.*" />
+      <FilesToDelete Include="$(SolutionDir)nugets\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="$(SolutionDir)NuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Caseless.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)Caseless.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" Condition="Exists('$(OutputPath)Caseless.Fody.pdb')" />
-    <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll.mdb" DestinationFolder="$(SolutionDir)NuGetBuild" Condition="Exists('$(OutputPath)Caseless.Fody.dll.mdb')" />
-    <Copy SourceFiles="$(ProjectDir)NuGetAssets\Fody_ToBeDeleted.txt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\install.ps1" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\uninstall.ps1" />
-    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild" MetadataAssembly="$(OutputPath)Caseless.Fody.dll" />
+    <MakeDir Directories="$(SolutionDir)nugets" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Caseless.Fody.nuspec" DestinationFolder="$(SolutionDir)nugets" />
+    <Copy SourceFiles="$(OutputPath)Caseless.Fody.dll" DestinationFolder="$(SolutionDir)nugets" />
+    <Copy SourceFiles="$(OutputPath)Caseless.Fody.pdb" DestinationFolder="$(SolutionDir)nugets" Condition="Exists('$(OutputPath)Caseless.Fody.pdb')" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)nugets" MetadataAssembly="$(OutputPath)Caseless.Fody.dll" />
   </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets'))" />
-  </Target>
-  <Import Project="..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" />
 </Project>

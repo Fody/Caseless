@@ -54,14 +54,14 @@
     {
         var x = "a";
         var y = "A";
-        return string.Equals(x,y);
+        return string.Equals(x, y);
     }
 
     public bool EqualsStaticWithNull()
     {
         string x = null;
         var y = "A";
-        return string.Equals(x,y);
+        return string.Equals(x, y);
     }
 
     public int IndexOf()
@@ -70,17 +70,19 @@
         var y = "A";
         return x.IndexOf(y);
     }
+
     public int IndexOf_StartIndex()
     {
         var x = "da";
         var y = "A";
-        return x.IndexOf(y,1);
+        return x.IndexOf(y, 1);
     }
+
     public int IndexOf_StartIndexCount()
     {
         var x = "da";
         var y = "A";
-        return x.IndexOf(y,1,1);
+        return x.IndexOf(y, 1, 1);
     }
 
     public int LastIndexOf()
@@ -137,6 +139,6 @@
         var x = "foo";
         var y = "F";
         var z = "G";
-        return x.StartsWith (y ?? z);
+        return x.StartsWith(y ?? z);
     }
 }

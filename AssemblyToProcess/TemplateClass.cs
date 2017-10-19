@@ -2,7 +2,6 @@
 
 public class TemplateClass
 {
-
     public int CompareTo()
     {
         var x = "a";
@@ -16,7 +15,6 @@ public class TemplateClass
         var y = "A";
         return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
     }
-
 
     public bool EndsWith()
     {
@@ -87,7 +85,7 @@ public class TemplateClass
         var y = "A";
         return x.StartsWith(y, StringComparison.OrdinalIgnoreCase);
     }
-    
+
     public bool OpEquals()
     {
         var x = "a";

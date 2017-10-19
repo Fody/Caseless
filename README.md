@@ -2,7 +2,7 @@
 [![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
 
 
-## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
+## This is an add-in for [Fody](https://github.com/Fody/Fody) 
 
 ![Icon](https://raw.github.com/Fody/Caseless/master/Icons/package_icon.png)
 
@@ -11,7 +11,7 @@ Change string comparisons to be case insensitive.
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
 
-## The nuget package
+## The NuGet package
 
 https://nuget.org/packages/Caseless.Fody/
 
@@ -42,26 +42,26 @@ https://nuget.org/packages/Caseless.Fody/
 
 The following string methods get converted to their StringComparison equivalents.
 
- * Equality http://msdn.microsoft.com/en-us/library/system.string.op_equality
- * Inequality http://msdn.microsoft.com/en-us/library/system.string.op_inequality
- * Equals(String) http://msdn.microsoft.com/en-us/library/858x0yyx
- * Equals(String, String) http://msdn.microsoft.com/en-us/library/1hkt4325
- * Compare(String,String) http://msdn.microsoft.com/en-us/library/84787k22
- * CompareTo(String) http://msdn.microsoft.com/en-us/library/35f0x18w
- * EndsWith(String) http://msdn.microsoft.com/en-us/library/2333wewz
- * Contains(String) http://msdn.microsoft.com/en-us/library/dy85x1sa
- * IndexOf(String) http://msdn.microsoft.com/en-us/library/k8b1470s
- * IndexOf(String, Int) http://msdn.microsoft.com/en-us/library/7cct0x33
- * IndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d93tkzah
- * LastIndexOf(String) http://msdn.microsoft.com/en-us/library/1wdsy8fy
- * LastIndexOf(String, Int) http://msdn.microsoft.com/en-us/library/bc3z4t9d
- * LastIndexOf(String, Int, Int) http://msdn.microsoft.com/en-us/library/d0z3tk9t
- * StartsWith(String) http://msdn.microsoft.com/en-us/library/baketfxw
+ * `Equality` http://msdn.microsoft.com/en-us/library/system.string.op_equality
+ * `Inequality` http://msdn.microsoft.com/en-us/library/system.string.op_inequality
+ * `Equals(String)` http://msdn.microsoft.com/en-us/library/858x0yyx
+ * `Equals(String, String)` http://msdn.microsoft.com/en-us/library/1hkt4325
+ * `Compare(String,String)` http://msdn.microsoft.com/en-us/library/84787k22
+ * `CompareTo(String)` http://msdn.microsoft.com/en-us/library/35f0x18w
+ * `EndsWith(String)` http://msdn.microsoft.com/en-us/library/2333wewz
+ * `Contains(String)` http://msdn.microsoft.com/en-us/library/dy85x1sa
+ * `IndexOf(String)` http://msdn.microsoft.com/en-us/library/k8b1470s
+ * `IndexOf(String, Int)` http://msdn.microsoft.com/en-us/library/7cct0x33
+ * `IndexOf(String, Int, Int)` http://msdn.microsoft.com/en-us/library/d93tkzah
+ * `LastIndexOf(String)` http://msdn.microsoft.com/en-us/library/1wdsy8fy
+ * `LastIndexOf(String, Int)` http://msdn.microsoft.com/en-us/library/bc3z4t9d
+ * `LastIndexOf(String, Int, Int)` http://msdn.microsoft.com/en-us/library/d0z3tk9t
+ * `StartsWith(String)` http://msdn.microsoft.com/en-us/library/baketfxw
 
 
 ## What about `String.Replace`
 
-This is because there is no overload for a case insensitive replace in the .net framework. 
+This is because there is no overload for a case insensitive replace in the .net framework.
 
 Here is an extension method to achieve it manually. Take from [this StackOverflow answer](http://stackoverflow.com/a/244933/53158)
  
