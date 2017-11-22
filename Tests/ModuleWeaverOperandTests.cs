@@ -16,21 +16,31 @@ public class ModuleWeaverOperandTests
         var beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
         var afterAssemblyPath = typeof(ModuleWeaverOperandTests).Name + ".dll";
 
-        var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath);
-        AddConditionalBranchLong(moduleDefinition, moduleDefinition.Types.Single(t => t.Name == "TargetClass"));
-
-        // Offset assignment happens on write
-        // Having offsets assigned prior to weaving makes tracking down bugs easier
-        moduleDefinition.Write(afterAssemblyPath);
-
-        var weavingTask = new ModuleWeaver
+        using (var assemblyResolver = new MockAssemblyResolver())
         {
-            ModuleDefinition = moduleDefinition,
-        };
-        weavingTask.Execute();
+            var readerParameters = new ReaderParameters
+            {
+                AssemblyResolver = assemblyResolver
+            };
 
-        moduleDefinition.Assembly.Name.Name += "ForOperand";
-        moduleDefinition.Write(afterAssemblyPath);
+            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
+            {
+                AddConditionalBranchLong(moduleDefinition, moduleDefinition.Types.Single(t => t.Name == "TargetClass"));
+
+                // Offset assignment happens on write
+                // Having offsets assigned prior to weaving makes tracking down bugs easier
+                moduleDefinition.Write(afterAssemblyPath);
+
+                var weavingTask = new ModuleWeaver
+                {
+                    ModuleDefinition = moduleDefinition,
+                };
+                weavingTask.Execute();
+
+                moduleDefinition.Assembly.Name.Name += "ForOperand";
+                moduleDefinition.Write(afterAssemblyPath);
+            }
+        }
         var assembly = Assembly.LoadFrom(afterAssemblyPath);
         var type = assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);

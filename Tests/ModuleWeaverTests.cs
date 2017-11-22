@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Mono.Cecil;
 using NUnit.Framework;
+// ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
 [TestFixture]
 public class ModuleWeaverTests
@@ -16,32 +17,39 @@ public class ModuleWeaverTests
         beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
         afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
 
-        using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath))
+        using (var assemblyResolver = new MockAssemblyResolver())
         {
-            var weavingTask = new ModuleWeaver
+            var readerParameters = new ReaderParameters
             {
-                ModuleDefinition = moduleDefinition,
+                AssemblyResolver = assemblyResolver
             };
 
-            weavingTask.Execute();
-            moduleDefinition.Write(afterAssemblyPath);
-        }
-        var assembly = Assembly.LoadFrom(afterAssemblyPath);
-        var type = assembly.GetType("TargetClass", true);
-        targetClass = Activator.CreateInstance(type);
-    }
+            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
+            {
+                var weavingTask = new ModuleWeaver
+                {
+                    ModuleDefinition = moduleDefinition,
+                };
 
+                weavingTask.Execute();
+                moduleDefinition.Write(afterAssemblyPath);
+            }
+            var assembly = Assembly.LoadFrom(afterAssemblyPath);
+            var type = assembly.GetType("TargetClass", true);
+            targetClass = Activator.CreateInstance(type);
+        }
+    }
 
     [Test]
     public void CompareTo()
     {
-        Assert.AreEqual(0,targetClass.CompareTo());
+        Assert.AreEqual(0, targetClass.CompareTo());
     }
 
     [Test]
     public void CompareStatic()
     {
-        Assert.AreEqual(0,targetClass.CompareStatic());
+        Assert.AreEqual(0, targetClass.CompareStatic());
     }
 
     [Test]
@@ -59,7 +67,7 @@ public class ModuleWeaverTests
     [Test]
     public void IndexOf()
     {
-        Assert.AreEqual(0,targetClass.IndexOf());
+        Assert.AreEqual(0, targetClass.IndexOf());
     }
 
     [Test]
@@ -77,7 +85,7 @@ public class ModuleWeaverTests
     [Test]
     public void LastIndexOf()
     {
-        Assert.AreEqual(0,targetClass.LastIndexOf());
+        Assert.AreEqual(0, targetClass.LastIndexOf());
     }
 
     [Test]
@@ -125,7 +133,7 @@ public class ModuleWeaverTests
     [Test]
     public void EqualsCallOnNull()
     {
-     Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
+        Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
     }
 
     [Test]

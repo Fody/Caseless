@@ -18,21 +18,29 @@ public class ModuleWeaverOperatorTests
         afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "4.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
-        using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath))
+        using (var assemblyResolver = new MockAssemblyResolver())
         {
-            var weavingTask = new ModuleWeaver
+            var readerParameters = new ReaderParameters
             {
-                Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
-                ModuleDefinition = moduleDefinition,
+                AssemblyResolver = assemblyResolver
             };
 
-            weavingTask.Execute();
-            moduleDefinition.Assembly.Name.Name += "ForOperator";
-            moduleDefinition.Write(afterAssemblyPath);
+            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
+            {
+                var weavingTask = new ModuleWeaver
+                {
+                    Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
+                    ModuleDefinition = moduleDefinition,
+                };
+
+                weavingTask.Execute();
+                moduleDefinition.Assembly.Name.Name += "ForOperator";
+                moduleDefinition.Write(afterAssemblyPath);
+            }
+            var assembly = Assembly.LoadFrom(afterAssemblyPath);
+            var type = assembly.GetType("TargetClass", true);
+            targetClass = Activator.CreateInstance(type);
         }
-        var assembly = Assembly.LoadFrom(afterAssemblyPath);
-        var type = assembly.GetType("TargetClass", true);
-        targetClass = Activator.CreateInstance(type);
     }
 
     [Test]

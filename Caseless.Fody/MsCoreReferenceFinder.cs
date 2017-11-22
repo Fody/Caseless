@@ -22,18 +22,29 @@ public partial class ModuleWeaver
 
     void AddAssemblyIfExists(string name, List<TypeDefinition> types)
     {
+        AssemblyDefinition msCoreLibDefinition;
         try
         {
-            var msCoreLibDefinition = ModuleDefinition.AssemblyResolver.Resolve(new AssemblyNameReference(name, null));
-
-            if (msCoreLibDefinition != null)
-            {
-                types.AddRange(msCoreLibDefinition.MainModule.Types);
-            }
+            msCoreLibDefinition = ModuleDefinition.AssemblyResolver.Resolve(new AssemblyNameReference(name, null));
         }
         catch (AssemblyResolutionException)
         {
             LogInfo($"Failed to resolve '{name}'. So skipping its types.");
+            return;
         }
+        if (msCoreLibDefinition == null)
+        {
+            return;
+        }
+        var module = msCoreLibDefinition.MainModule;
+        types.AddRange(ResolveExportedTypes(module));
+        types.AddRange(module.Types);
+    }
+
+    static IEnumerable<TypeDefinition> ResolveExportedTypes(ModuleDefinition module)
+    {
+        return module.ExportedTypes
+            .Select(exportedType => exportedType.Resolve())
+            .Where(typeDefinition => typeDefinition != null);
     }
 }

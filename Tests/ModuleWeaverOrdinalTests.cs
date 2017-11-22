@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using Mono.Cecil;
 using NUnit.Framework;
+// ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
 [TestFixture]
 public class ModuleWeaverOrdinalTests
@@ -15,26 +16,27 @@ public class ModuleWeaverOrdinalTests
     public ModuleWeaverOrdinalTests()
     {
         beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\..\AssemblyToProcess\bin\Debug\net452\AssemblyToProcess.dll"));
-#if (!DEBUG)
-       beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-#if (!DEBUG)
-        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
         afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "3.dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
-        using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath))
+        using (var assemblyResolver = new MockAssemblyResolver())
         {
-            var weavingTask = new ModuleWeaver
+            var readerParameters = new ReaderParameters
             {
-                Config = XElement.Parse(@"<Caseless StringComparison="" ordinal ""/>"),
-                ModuleDefinition = moduleDefinition,
+                AssemblyResolver = assemblyResolver
             };
+            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
+            {
+                var weavingTask = new ModuleWeaver
+                {
+                    Config = XElement.Parse(@"<Caseless StringComparison="" ordinal ""/>"),
+                    ModuleDefinition = moduleDefinition,
+                };
 
-            weavingTask.Execute();
-            moduleDefinition.Assembly.Name.Name += "ForOrdinal";
-            moduleDefinition.Write(afterAssemblyPath);
+                weavingTask.Execute();
+                moduleDefinition.Assembly.Name.Name += "ForOrdinal";
+                moduleDefinition.Write(afterAssemblyPath);
+            }
         }
         var assembly = Assembly.LoadFrom(afterAssemblyPath);
         var type = assembly.GetType("TargetClass", true);

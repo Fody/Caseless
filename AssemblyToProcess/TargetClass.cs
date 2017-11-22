@@ -1,4 +1,7 @@
-﻿public class TargetClass
+﻿// ReSharper disable ExpressionIsAlwaysNull
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+// ReSharper disable ConstantNullCoalescingCondition
+public class TargetClass
 {
     public int CompareTo()
     {
