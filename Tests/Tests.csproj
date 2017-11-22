@@ -5,7 +5,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyCecil" Version="2.*" />
-    <PackageReference Include="NUnit" Version="*" />
+    <PackageReference Include="NUnit" Version="3.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.*" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
     <ProjectReference Include="..\Caseless.Fody\Caseless.Fody.csproj" />
     <Reference Include="Microsoft.CSharp" />
