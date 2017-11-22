@@ -154,12 +154,9 @@ public class ModuleWeaverTests
         Assert.IsTrue(targetClass.ConditionalBranch());
     }
 
-#if(DEBUG)
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
-#endif
-
 }

@@ -37,14 +37,6 @@ public partial class ModuleWeaver
             return;
         }
         var module = msCoreLibDefinition.MainModule;
-        types.AddRange(ResolveExportedTypes(module));
         types.AddRange(module.Types);
-    }
-
-    static IEnumerable<TypeDefinition> ResolveExportedTypes(ModuleDefinition module)
-    {
-        return module.ExportedTypes
-            .Select(exportedType => exportedType.Resolve())
-            .Where(typeDefinition => typeDefinition != null);
     }
 }

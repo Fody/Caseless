@@ -117,14 +117,16 @@ public static class StringExtensions
 
 ## Default String Comparison
 
-If your don't want to use StringComparison.OrdinalIgnoreCase then you can configure the addin inside the FodyWeavers.xml file.
+If your don't want to use `StringComparison.OrdinalIgnoreCase` then you can configure the addin inside the FodyWeavers.xml file.
 
-For example if you want to use StringComparison.InvariantCultureIgnoreCase then add the following to FodyWeavers.xml.
+For example if you want to use `StringComparison.InvariantCultureIgnoreCase` then add the following to FodyWeavers.xml.
 
-    <?xml version="1.0" encoding="utf-8" ?>
-    <Weavers>
-        <Caseless StringComparison="InvariantCultureIgnoreCase"/>
-    </Weavers>
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<Weavers>
+    <Caseless StringComparison="InvariantCultureIgnoreCase"/>
+</Weavers>
+```
 
 
 ## Icon 
