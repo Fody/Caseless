@@ -15,7 +15,7 @@ public class ModuleWeaverTests
     public ModuleWeaverTests()
     {
         beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
+        afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverTests).Name + ".dll");
 
         using (var assemblyResolver = new MockAssemblyResolver())
         {
@@ -34,10 +34,10 @@ public class ModuleWeaverTests
                 weavingTask.Execute();
                 moduleDefinition.Write(afterAssemblyPath);
             }
-            var assembly = Assembly.LoadFrom(afterAssemblyPath);
-            var type = assembly.GetType("TargetClass", true);
-            targetClass = Activator.CreateInstance(type);
         }
+        var assembly = Assembly.LoadFrom(afterAssemblyPath);
+        var type = assembly.GetType("TargetClass", true);
+        targetClass = Activator.CreateInstance(type);
     }
 
     [Test]

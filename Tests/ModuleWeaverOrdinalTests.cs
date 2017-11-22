@@ -15,8 +15,8 @@ public class ModuleWeaverOrdinalTests
 
     public ModuleWeaverOrdinalTests()
     {
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\..\AssemblyToProcess\bin\Debug\net452\AssemblyToProcess.dll"));
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "3.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll"));
+        afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverOrdinalTests).Name + ".dll");
         File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
 
         using (var assemblyResolver = new MockAssemblyResolver())
@@ -29,12 +29,12 @@ public class ModuleWeaverOrdinalTests
             {
                 var weavingTask = new ModuleWeaver
                 {
-                    Config = XElement.Parse(@"<Caseless StringComparison="" ordinal ""/>"),
+                    Config = XElement.Parse(@"<Caseless StringComparison=""ordinal""/>"),
                     ModuleDefinition = moduleDefinition,
                 };
 
                 weavingTask.Execute();
-                moduleDefinition.Assembly.Name.Name += "ForOrdinal";
+                moduleDefinition.Assembly.Name.Name += typeof(ModuleWeaverOrdinalTests).Name;
                 moduleDefinition.Write(afterAssemblyPath);
             }
         }

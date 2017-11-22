@@ -14,7 +14,7 @@ public class ModuleWeaverOperandTests
     public ModuleWeaverOperandTests()
     {
         var beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
-        var afterAssemblyPath = typeof(ModuleWeaverOperandTests).Name + ".dll";
+        var afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverOperandTests).Name + ".dll");
 
         using (var assemblyResolver = new MockAssemblyResolver())
         {
@@ -37,7 +37,7 @@ public class ModuleWeaverOperandTests
                 };
                 weavingTask.Execute();
 
-                moduleDefinition.Assembly.Name.Name += "ForOperand";
+                moduleDefinition.Assembly.Name.Name += typeof(ModuleWeaverOperandTests).Name;
                 moduleDefinition.Write(afterAssemblyPath);
             }
         }
