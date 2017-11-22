@@ -28,6 +28,5 @@ public class CompareConverter : IConverter
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
             yield return Instruction.Create(OpCodes.Call, reference);
         }
-
     }
 }

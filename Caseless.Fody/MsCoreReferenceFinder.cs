@@ -36,5 +36,4 @@ public partial class ModuleWeaver
             LogInfo($"Failed to resolve '{name}'. So skipping its types.");
         }
     }
-
 }

@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using ApprovalTests;
 using NUnit.Framework;
 
 [TestFixture]
@@ -30,7 +29,7 @@ public class DefaultStringComparisonFinderTests
     {
         var xElement = XElement.Parse("<Caseless StringComparison='  '/>");
         var exception = Assert.Throws<WeavingException>(() => DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
-        Approvals.Verify(exception.Message);
+        Assert.AreEqual("Expected StringComparison to have a value.", exception.Message);
     }
 
     [Test]
@@ -38,6 +37,6 @@ public class DefaultStringComparisonFinderTests
     {
         var xElement = XElement.Parse("<Caseless StringComparison=''/>");
         var exception = Assert.Throws<WeavingException>(() => DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
-        Approvals.Verify(exception.Message);
+        Assert.AreEqual("Expected StringComparison to have a value.", exception.Message);
     }
 }

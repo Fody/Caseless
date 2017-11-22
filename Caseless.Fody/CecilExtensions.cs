@@ -3,7 +3,6 @@ using Mono.Collections.Generic;
 
 public static class CecilExtensions
 {
-
     public static bool Matches(this Collection<ParameterDefinition> parameters, params string[] matches)
     {
         if (parameters.Count != matches.Length)
@@ -21,5 +20,4 @@ public static class CecilExtensions
         }
         return true;
     }
-
 }

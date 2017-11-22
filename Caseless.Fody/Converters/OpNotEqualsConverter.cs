@@ -41,8 +41,8 @@ public class OpNotEqualsConverter : IEqualityConverter
         }
 
         yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
-        yield return Instruction.Create(OpCodes.Call, reference); 
-        yield return Instruction.Create(OpCodes.Ldc_I4_0); 
-        yield return Instruction.Create(OpCodes.Ceq); 
+        yield return Instruction.Create(OpCodes.Call, reference);
+        yield return Instruction.Create(OpCodes.Ldc_I4_0);
+        yield return Instruction.Create(OpCodes.Ceq);
     }
 }

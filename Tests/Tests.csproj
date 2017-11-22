@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452</TargetFrameworks>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ApprovalTests" Version="*" />
-    <PackageReference Include="ApprovalUtilities" Version="*" />
     <PackageReference Include="FodyCecil" Version="2.*" />
-    <PackageReference Include="Newtonsoft.Json" Version="*" />
-    <PackageReference Include="ObjectApproval" Version="*" />
     <PackageReference Include="NUnit" Version="*" />
-    <ProjectReference Include="..\Fody\Fody.csproj" />
+    <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
+    <ProjectReference Include="..\Caseless.Fody\Caseless.Fody.csproj" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 </Project>

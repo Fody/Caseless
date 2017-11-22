@@ -4,18 +4,41 @@
 
 ## This is an add-in for [Fody](https://github.com/Fody/Fody) 
 
-![Icon](https://raw.github.com/Fody/Caseless/master/Icons/package_icon.png)
+![Icon](https://raw.github.com/Fody/Caseless/master/package_icon.png)
 
 Change string comparisons to be case insensitive.
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
 
-## The NuGet package
+## Usage
 
-https://nuget.org/packages/Caseless.Fody/
+See also [Fody usage](https://github.com/Fody/Fody#usage).
 
-    PM> Install-Package Caseless.Fody
+
+### NuGet installation
+
+Install the [Caseless.Fody NuGet package](https://nuget.org/packages/Caseless.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
+
+```
+PM> Install-Package Caseless.Fody
+PM> Update-Package Fody
+```
+
+The `Update-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
+
+
+### Add to FodyWeavers.xml
+
+Add `<Caseless/>` to [FodyWeavers.xml](https://github.com/Fody/Fody#add-fodyweaversxml)
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<Weavers>
+  <Caseless/>
+</Weavers>
+```
+
 
 
 ## Your Code
