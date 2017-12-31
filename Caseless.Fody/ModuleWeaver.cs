@@ -1,38 +1,28 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
-public partial class ModuleWeaver
+public partial class ModuleWeaver : BaseModuleWeaver
 {
-    public Action<string> LogInfo { get; set; }
-    public Action<string> LogWarning { get; set; }
-    public ModuleDefinition ModuleDefinition { get; set; }
-    public XElement Config { get; set; }
     ConverterCache converterCache;
 
-    public ModuleWeaver()
-    {
-        LogInfo = s => { };
-        LogWarning = s => { };
-    }
-
-    public void Execute()
+    public override void Execute()
     {
         FindCoreReferences();
         var comparisonFinder = new DefaultStringComparisonFinder
-                                   {
-                                       ModuleWeaver = this
-                                   };
+        {
+            ModuleWeaver = this
+        };
         comparisonFinder.Execute();
         converterCache = new ConverterCache
-                             {
-                                 ModuleWeaver = this,
-                                 ModuleDefinition = ModuleDefinition,
-                                 DefaultStringComparisonFinder = comparisonFinder
-                             };
+        {
+            ModuleWeaver = this,
+            ModuleDefinition = ModuleDefinition,
+            DefaultStringComparisonFinder = comparisonFinder
+        };
         converterCache.Execute();
 
         foreach (var type in ModuleDefinition.GetTypes())
@@ -41,12 +31,23 @@ public partial class ModuleWeaver
             {
                 continue;
             }
+
             if (type.IsEnum)
             {
                 continue;
             }
+
             ProcessType(type);
         }
+    }
+
+    public override IEnumerable<string> GetAssembliesForScanning()
+    {
+        yield return "netstandard";
+        yield return "mscorlib";
+        yield return "System";
+        yield return "System.Runtime";
+        yield return "System.Core";
     }
 
     void ProcessType(TypeDefinition typeDefinition)
@@ -57,6 +58,7 @@ public partial class ModuleWeaver
             {
                 continue;
             }
+
             ProcessMethod(method);
         }
     }
@@ -72,8 +74,8 @@ public partial class ModuleWeaver
             {
                 continue;
             }
-            var methodReference = instruction.Operand as MethodReference;
-            if (methodReference == null)
+
+            if (!(instruction.Operand is MethodReference methodReference))
             {
                 continue;
             }
@@ -82,6 +84,7 @@ public partial class ModuleWeaver
             {
                 continue;
             }
+
             foreach (var converter in converterCache.Converters)
             {
                 var replaceWith = converter.Convert(methodReference).ToList();
@@ -91,16 +94,21 @@ public partial class ModuleWeaver
                     {
                         inst.Operand = replaceWith[0];
                     }
+
                     instructions.RemoveAt(index);
                     foreach (var innerInstruction in replaceWith)
                     {
                         instructions.Insert(index, innerInstruction);
                         index++;
                     }
+
                     break;
                 }
             }
         }
+
         method.Body.OptimizeMacros();
     }
+
+    public override bool ShouldCleanReference => true;
 }

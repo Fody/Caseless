@@ -1,99 +1,72 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Xml.Linq;
-using Mono.Cecil;
-using NUnit.Framework;
+using Fody;
+using Xunit;
+#pragma warning disable 618
 
-[TestFixture]
 public class ModuleWeaverOperatorTests
 {
     dynamic targetClass;
-    string afterAssemblyPath;
-    string beforeAssemblyPath;
 
     public ModuleWeaverOperatorTests()
     {
-        beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
-        afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverOperatorTests).Name + ".dll");
-        File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
-
-        using (var assemblyResolver = new MockAssemblyResolver())
+        var weavingTask = new ModuleWeaver
         {
-            var readerParameters = new ReaderParameters
-            {
-                AssemblyResolver = assemblyResolver
-            };
+            Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
+        };
 
-            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
-            {
-                var weavingTask = new ModuleWeaver
-                {
-                    Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
-                    ModuleDefinition = moduleDefinition,
-                };
-
-                weavingTask.Execute();
-                moduleDefinition.Assembly.Name.Name += typeof(ModuleWeaverOperatorTests).Name;
-                moduleDefinition.Write(afterAssemblyPath);
-            }
-        }
-        var assembly = Assembly.LoadFrom(afterAssemblyPath);
-        var type = assembly.GetType("TargetClass", true);
+        var testResult = weavingTask.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            assemblyName: $"{nameof(ModuleWeaverOperatorTests)}AssemblyToProcess");
+        var type = testResult.Assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);
     }
 
-    [Test]
+    [Fact]
     public void OpEquals()
     {
-        Assert.IsFalse(targetClass.OpEquals());
+        Assert.False(targetClass.OpEquals());
     }
 
-    [Test]
+    [Fact]
     public void OpEqualsWithNull()
     {
-        Assert.IsFalse(targetClass.OpEqualsWithNull());
+        Assert.False(targetClass.OpEqualsWithNull());
     }
 
-    [Test]
+    [Fact]
     public void OpNotEquals()
     {
-        Assert.IsTrue(targetClass.OpNotEquals());
+        Assert.True(targetClass.OpNotEquals());
     }
 
-    [Test]
+    [Fact]
     public void OpNotEqualsWithNull()
     {
-        Assert.IsTrue(targetClass.OpNotEqualsWithNull());
+        Assert.True(targetClass.OpNotEqualsWithNull());
     }
 
-    [Test]
-    public void Equals()
+    [Fact]
+    public void Equal()
     {
-        Assert.IsFalse(targetClass.Equals());
+        Assert.False(targetClass.Equals());
     }
 
-    [Test]
+    [Fact]
     public void EqualsCallOnNull()
     {
-        Assert.IsFalse(targetClass.EqualsCallOnNull());
+        Assert.False(targetClass.EqualsCallOnNull());
     }
 
-    [Test]
+    [Fact]
     public void EqualsStatic()
     {
-        Assert.IsFalse(targetClass.EqualsStatic());
+        Assert.False(targetClass.EqualsStatic());
     }
 
-    [Test]
+    [Fact]
     public void EqualsStaticWithNull()
     {
-        Assert.IsFalse(targetClass.EqualsStaticWithNull());
-    }
-
-    [Test]
-    public void PeVerify()
-    {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+        Assert.False(targetClass.EqualsStaticWithNull());
     }
 }

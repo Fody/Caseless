@@ -1,54 +1,30 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
 public class ModuleWeaverOperandTests
 {
     dynamic targetClass;
 
     public ModuleWeaverOperandTests()
     {
-        var beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
-        var afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverOperandTests).Name + ".dll");
+        var weavingTask = new ModuleWeaver();
 
-        using (var assemblyResolver = new MockAssemblyResolver())
-        {
-            var readerParameters = new ReaderParameters
-            {
-                AssemblyResolver = assemblyResolver
-            };
-
-            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
-            {
-                AddConditionalBranchLong(moduleDefinition, moduleDefinition.Types.Single(t => t.Name == "TargetClass"));
-
-                // Offset assignment happens on write
-                // Having offsets assigned prior to weaving makes tracking down bugs easier
-                moduleDefinition.Write(afterAssemblyPath);
-
-                var weavingTask = new ModuleWeaver
-                {
-                    ModuleDefinition = moduleDefinition,
-                };
-                weavingTask.Execute();
-
-                moduleDefinition.Assembly.Name.Name += typeof(ModuleWeaverOperandTests).Name;
-                moduleDefinition.Write(afterAssemblyPath);
-            }
-        }
-        var assembly = Assembly.LoadFrom(afterAssemblyPath);
-        var type = assembly.GetType("TargetClass", true);
+        var testResult = weavingTask.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            beforeExecuteCallback: AddConditionalBranchLong,
+            assemblyName: $"{nameof(ModuleWeaverOperandTests)}AssemblyToProcess");
+        var type = testResult.Assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);
     }
 
-    static void AddConditionalBranchLong(ModuleDefinition module, TypeDefinition type)
+    static void AddConditionalBranchLong(ModuleDefinition module)
     {
-        var method = new MethodDefinition("ConditionalBranchLong", Mono.Cecil.MethodAttributes.Public, module.TypeSystem.Boolean);
+        var type = module.Types.Single(t => t.Name == "TargetClass");
+        var method = new MethodDefinition("ConditionalBranchLong", MethodAttributes.Public, module.TypeSystem.Boolean);
         var body = method.Body;
         body.InitLocals = true;
         var il = body.GetILProcessor();
@@ -69,9 +45,9 @@ public class ModuleWeaverOperandTests
         type.Methods.Add(method);
     }
 
-    [Test]
+    [Fact]
     public void Conditional()
     {
-        Assert.IsTrue(targetClass.ConditionalBranchLong());
+        Assert.True(targetClass.ConditionalBranchLong());
     }
 }

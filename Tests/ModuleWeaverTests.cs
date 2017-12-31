@@ -1,162 +1,135 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
-using Mono.Cecil;
-using NUnit.Framework;
+using Fody;
+using Xunit;
+
 // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
-[TestFixture]
 public class ModuleWeaverTests
 {
     dynamic targetClass;
-    string afterAssemblyPath;
-    string beforeAssemblyPath;
 
     public ModuleWeaverTests()
     {
-        beforeAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "AssemblyToProcess.dll");
-        afterAssemblyPath = Path.Combine(TestContext.CurrentContext.TestDirectory, typeof(ModuleWeaverTests).Name + ".dll");
+        var weavingTask = new ModuleWeaver();
 
-        using (var assemblyResolver = new MockAssemblyResolver())
-        {
-            var readerParameters = new ReaderParameters
-            {
-                AssemblyResolver = assemblyResolver
-            };
-
-            using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath, readerParameters))
-            {
-                var weavingTask = new ModuleWeaver
-                {
-                    ModuleDefinition = moduleDefinition,
-                };
-
-                weavingTask.Execute();
-                moduleDefinition.Write(afterAssemblyPath);
-            }
-        }
-        var assembly = Assembly.LoadFrom(afterAssemblyPath);
-        var type = assembly.GetType("TargetClass", true);
+        var testResult = weavingTask.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            assemblyName: $"{nameof(ModuleWeaverTests)}AssemblyToProcess");
+        var type = testResult.Assembly.GetType("TargetClass", true);
         targetClass = Activator.CreateInstance(type);
     }
 
-    [Test]
+    [Fact]
     public void CompareTo()
     {
-        Assert.AreEqual(0, targetClass.CompareTo());
+        Assert.Equal(0, targetClass.CompareTo());
     }
 
-    [Test]
+    [Fact]
     public void CompareStatic()
     {
-        Assert.AreEqual(0, targetClass.CompareStatic());
+        Assert.Equal(0, targetClass.CompareStatic());
     }
 
-    [Test]
+    [Fact]
     public void CompareStaticWithNull()
     {
-        Assert.AreEqual(-1, targetClass.CompareStaticWithNull());
+        Assert.Equal(-1, targetClass.CompareStaticWithNull());
     }
 
-    [Test]
+    [Fact]
     public void Contains()
     {
-        Assert.IsTrue(targetClass.Contains());
+        Assert.True(targetClass.Contains());
     }
 
-    [Test]
+    [Fact]
     public void IndexOf()
     {
-        Assert.AreEqual(0, targetClass.IndexOf());
+        Assert.Equal(0, targetClass.IndexOf());
     }
 
-    [Test]
+    [Fact]
     public void IndexOf_StartIndex()
     {
-        Assert.AreEqual(1, targetClass.IndexOf_StartIndex());
+        Assert.Equal(1, targetClass.IndexOf_StartIndex());
     }
 
-    [Test]
+    [Fact]
     public void IndexOf_StartIndexCount()
     {
-        Assert.AreEqual(1, targetClass.IndexOf_StartIndexCount());
+        Assert.Equal(1, targetClass.IndexOf_StartIndexCount());
     }
 
-    [Test]
+    [Fact]
     public void LastIndexOf()
     {
-        Assert.AreEqual(0, targetClass.LastIndexOf());
+        Assert.Equal(0, targetClass.LastIndexOf());
     }
 
-    [Test]
+    [Fact]
     public void OpEquals()
     {
-        Assert.IsTrue(targetClass.OpEquals());
+        Assert.True(targetClass.OpEquals());
     }
 
-    [Test]
+    [Fact]
     public void OpEqualsWithNull()
     {
-        Assert.IsFalse(targetClass.OpEqualsWithNull());
+        Assert.False(targetClass.OpEqualsWithNull());
     }
 
-    [Test]
+    [Fact]
     public void OpNotEquals()
     {
-        Assert.IsFalse(targetClass.OpNotEquals());
+        Assert.False(targetClass.OpNotEquals());
     }
 
-    [Test]
+    [Fact]
     public void OpNotEqualsWithNull()
     {
-        Assert.IsTrue(targetClass.OpNotEqualsWithNull());
+        Assert.True(targetClass.OpNotEqualsWithNull());
     }
 
-    [Test]
+    [Fact]
     public void StartsWith()
     {
-        Assert.IsTrue(targetClass.StartsWith());
+        Assert.True(targetClass.StartsWith());
     }
 
-    [Test]
+    [Fact]
     public void EndsWith()
     {
-        Assert.IsTrue(targetClass.EndsWith());
+        Assert.True(targetClass.EndsWith());
     }
 
-    [Test]
-    public void Equals()
+    [Fact]
+    public void Equal()
     {
-        Assert.IsTrue(targetClass.Equals());
+        Assert.True(targetClass.Equals());
     }
 
-    [Test]
+    [Fact]
     public void EqualsCallOnNull()
     {
         Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
     }
 
-    [Test]
+    [Fact]
     public void EqualsStatic()
     {
-        Assert.IsTrue(targetClass.EqualsStatic());
+        Assert.True(targetClass.EqualsStatic());
     }
 
-    [Test]
+    [Fact]
     public void EqualsStaticWithNull()
     {
-        Assert.IsFalse(targetClass.EqualsStaticWithNull());
+        Assert.False(targetClass.EqualsStaticWithNull());
     }
 
-    [Test]
+    [Fact]
     public void Conditional()
     {
-        Assert.IsTrue(targetClass.ConditionalBranch());
-    }
-
-    [Test]
-    public void PeVerify()
-    {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+        Assert.True(targetClass.ConditionalBranch());
     }
 }
