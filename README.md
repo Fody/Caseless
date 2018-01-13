@@ -4,7 +4,7 @@
 
 ## This is an add-in for [Fody](https://github.com/Fody/Fody) 
 
-![Icon](https://raw.github.com/Fody/Caseless/master/package_icon.png)
+![Icon](https://raw.githubusercontent.comFody/Caseless/master/package_icon.png)
 
 Change string comparisons to be case insensitive.
 
