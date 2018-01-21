@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -17,8 +16,7 @@ public class ModuleWeaverOperandTests
             assemblyPath: "AssemblyToProcess.dll",
             beforeExecuteCallback: AddConditionalBranchLong,
             assemblyName: $"{nameof(ModuleWeaverOperandTests)}AssemblyToProcess");
-        var type = testResult.Assembly.GetType("TargetClass", true);
-        targetClass = Activator.CreateInstance(type);
+        targetClass = testResult.GetInstance("TargetClass");
     }
 
     static void AddConditionalBranchLong(ModuleDefinition module)

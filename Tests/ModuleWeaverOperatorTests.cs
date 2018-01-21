@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using Fody;
 using Xunit;
 #pragma warning disable 618
@@ -18,8 +17,7 @@ public class ModuleWeaverOperatorTests
         var testResult = weavingTask.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             assemblyName: $"{nameof(ModuleWeaverOperatorTests)}AssemblyToProcess");
-        var type = testResult.Assembly.GetType("TargetClass", true);
-        targetClass = Activator.CreateInstance(type);
+        targetClass = testResult.GetInstance("TargetClass");
     }
 
     [Fact]

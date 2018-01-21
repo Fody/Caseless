@@ -15,8 +15,7 @@ public class ModuleWeaverTests
         var testResult = weavingTask.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             assemblyName: $"{nameof(ModuleWeaverTests)}AssemblyToProcess");
-        var type = testResult.Assembly.GetType("TargetClass", true);
-        targetClass = Activator.CreateInstance(type);
+        targetClass = testResult.GetInstance("TargetClass");
     }
 
     [Fact]
