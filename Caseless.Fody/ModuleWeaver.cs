@@ -70,7 +70,8 @@ public partial class ModuleWeaver : BaseModuleWeaver
         for (var index = 0; index < instructions.Count; index++)
         {
             var instruction = instructions[index];
-            if (instruction.OpCode != OpCodes.Callvirt && instruction.OpCode != OpCodes.Call)
+            if (instruction.OpCode != OpCodes.Callvirt &&
+                instruction.OpCode != OpCodes.Call)
             {
                 continue;
             }
