@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Version>1.8.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
