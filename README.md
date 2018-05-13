@@ -43,22 +43,26 @@ Add `<Caseless/>` to [FodyWeavers.xml](https://github.com/Fody/Fody#add-fodyweav
 
 ## Your Code
 
-    public bool Foo()
-    {
-        var x = "a";
-        var y = "A";
-        return x == y;
-    }
+```csharp
+public bool Foo()
+{
+    var x = "a";
+    var y = "A";
+    return x == y;
+}
+```
 
 
 ## What gets compiled
 
-    public bool Foo()
-    {
-        var x = "a";
-        var y = "A";
-        return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
-    }
+```csharp
+public bool Foo()
+{
+    var x = "a";
+    var y = "A";
+    return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
+}
+```
 
 
 ## Converted Methods
@@ -87,8 +91,8 @@ The following string methods get converted to their StringComparison equivalents
 This is because there is no overload for a case insensitive replace in the .net framework.
 
 Here is an extension method to achieve it manually. Take from [this StackOverflow answer](http://stackoverflow.com/a/244933/53158)
- 
-```
+
+```csharp
 public static class StringExtensions
 {
     public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
