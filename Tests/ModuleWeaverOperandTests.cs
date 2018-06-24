@@ -10,19 +10,19 @@ public class ModuleWeaverOperandTests
 
     public ModuleWeaverOperandTests()
     {
-        var weavingTask = new ModuleWeaver();
+        var moduleWeaver = new ModuleWeaver();
 
-        var testResult = weavingTask.ExecuteTestRun(
+        var testResult = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            beforeExecuteCallback: AddConditionalBranchLong,
+            beforeExecuteCallback: definition => AddConditionalBranchLong(definition, moduleWeaver),
             assemblyName: $"{nameof(ModuleWeaverOperandTests)}AssemblyToProcess");
         targetClass = testResult.GetInstance("TargetClass");
     }
 
-    static void AddConditionalBranchLong(ModuleDefinition module)
+    static void AddConditionalBranchLong(ModuleDefinition module, ModuleWeaver moduleWeaver)
     {
         var type = module.Types.Single(t => t.Name == "TargetClass");
-        var method = new MethodDefinition("ConditionalBranchLong", MethodAttributes.Public, module.TypeSystem.Boolean);
+        var method = new MethodDefinition("ConditionalBranchLong", MethodAttributes.Public, moduleWeaver.TypeSystem.BooleanReference);
         var body = method.Body;
         body.InitLocals = true;
         var il = body.GetILProcessor();
