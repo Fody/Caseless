@@ -6,9 +6,9 @@ using Xunit;
 
 public class ModuleWeaverOperandTests
 {
-    dynamic targetClass;
+    static dynamic targetClass;
 
-    public ModuleWeaverOperandTests()
+    static ModuleWeaverOperandTests()
     {
         var moduleWeaver = new ModuleWeaver();
 

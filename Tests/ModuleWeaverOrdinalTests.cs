@@ -7,9 +7,9 @@ using Fody;
 
 public class ModuleWeaverOrdinalTests
 {
-    dynamic targetClass;
+    static dynamic targetClass;
 
-    public ModuleWeaverOrdinalTests()
+    static ModuleWeaverOrdinalTests()
     {
         var weavingTask = new ModuleWeaver
         {
@@ -55,7 +55,7 @@ public class ModuleWeaverOrdinalTests
     [Fact]
     public void EqualsCallOnNull()
     {
-     Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
+        Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
     }
 
     [Fact]
