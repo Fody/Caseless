@@ -132,6 +132,6 @@ For example if you want to use `StringComparison.InvariantCultureIgnoreCase` the
 ```
 
 
-## Icon 
+## Icon
 
 <a href="http://thenounproject.com/noun/aardvark/#icon-No6982" target="_blank">Aardvark</a> designed by <a href="http://thenounproject.com/nmac" target="_blank">N J MacNeil</a> from The Noun Project

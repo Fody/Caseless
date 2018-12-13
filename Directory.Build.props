@@ -4,8 +4,6 @@
     <Version>1.8.3</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
-    <DebugType>embedded</DebugType>
-    <DebugSymbols>true</DebugSymbols>
     <NoWarn>NU5118</NoWarn>
   </PropertyGroup>
 </Project>
