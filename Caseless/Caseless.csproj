@@ -7,6 +7,7 @@
     <Authors>Simon Cropp</Authors>
     <Description>Changes string comparisons to case insensitive.</Description>
     <PackageTags>String, Case Insensitive, ILWeaving, Fody, Cecil</PackageTags>
+    <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyPackaging" Version="4.0.2" PrivateAssets="All" />
