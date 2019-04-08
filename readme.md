@@ -31,7 +31,6 @@ The `Install-Package Fody` is required since NuGet always defaults to the oldest
 Add `<Caseless/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/master/pages/usage.md#add-fodyweaversxml)
 
 ```xml
-<?xml version="1.0" encoding="utf-8" ?>
 <Weavers>
   <Caseless/>
 </Weavers>
@@ -123,7 +122,6 @@ If your don't want to use `StringComparison.OrdinalIgnoreCase` then you can conf
 For example if you want to use `StringComparison.InvariantCultureIgnoreCase` then add the following to FodyWeavers.xml.
 
 ```xml
-<?xml version="1.0" encoding="utf-8" ?>
 <Weavers>
     <Caseless StringComparison="InvariantCultureIgnoreCase"/>
 </Weavers>
