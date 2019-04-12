@@ -3,8 +3,10 @@ using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Xunit;
+using Xunit.Abstractions;
 
-public class ModuleWeaverOperandTests
+public class ModuleWeaverOperandTests :
+    XunitLoggingBase
 {
     static dynamic targetClass;
 
@@ -47,5 +49,10 @@ public class ModuleWeaverOperandTests
     public void Conditional()
     {
         Assert.True(targetClass.ConditionalBranchLong());
+    }
+
+    public ModuleWeaverOperandTests(ITestOutputHelper output) :
+        base(output)
+    {
     }
 }

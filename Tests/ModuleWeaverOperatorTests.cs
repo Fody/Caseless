@@ -1,9 +1,10 @@
 ﻿using System.Xml.Linq;
 using Fody;
 using Xunit;
-#pragma warning disable 618
+using Xunit.Abstractions;
 
-public class ModuleWeaverOperatorTests
+public class ModuleWeaverOperatorTests :
+    XunitLoggingBase
 {
     static dynamic targetClass;
 
@@ -66,5 +67,10 @@ public class ModuleWeaverOperatorTests
     public void EqualsStaticWithNull()
     {
         Assert.False(targetClass.EqualsStaticWithNull());
+    }
+
+    public ModuleWeaverOperatorTests(ITestOutputHelper output) :
+        base(output)
+    {
     }
 }
