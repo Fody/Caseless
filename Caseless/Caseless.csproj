@@ -8,9 +8,11 @@
     <Description>Changes string comparisons to case insensitive.</Description>
     <PackageTags>String, Case Insensitive, ILWeaving, Fody, Cecil</PackageTags>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
+    <PackageIconUrl>https://raw.githubusercontent.com/Fody/Caseless/master/package_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://github.com/Fody/Caseless</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyPackaging" Version="5.0.0-beta.9" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="5.0.0-beta.9" PrivateAssets="None" />
+    <PackageReference Include="FodyPackaging" Version="5.0.0-beta.11" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="5.0.0-beta.11" PrivateAssets="None" />
   </ItemGroup>
 </Project>
