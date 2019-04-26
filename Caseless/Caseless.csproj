@@ -12,7 +12,7 @@
     <PackageProjectUrl>http://github.com/Fody/Caseless</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyPackaging" Version="5.0.0" PrivateAssets="All" />
+    <PackageReference Include="FodyPackaging" Version="5.0.1" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="5.0.1" PrivateAssets="None" />
   </ItemGroup>
 </Project>
