@@ -9,7 +9,7 @@
     <PackageTags>String, Case Insensitive, ILWeaving, Fody, Cecil</PackageTags>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Caseless/master/package_icon.png</PackageIconUrl>
-    <PackageProjectUrl>http://github.com/Fody/Caseless</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Fody/Caseless</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyPackaging" Version="5.0.6" PrivateAssets="All" />
