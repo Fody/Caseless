@@ -86,7 +86,7 @@ The following string methods get converted to their StringComparison equivalents
 
 This is because there is no overload for a case insensitive replace in the .net framework.
 
-Here is an extension method to achieve it manually. Take from [this StackOverflow answer](http://stackoverflow.com/a/244933/53158)
+Here is an extension method to achieve it manually. Taken from [this StackOverflow answer](http://stackoverflow.com/a/244933/53158)
 
 ```csharp
 public static class StringExtensions
@@ -117,9 +117,9 @@ public static class StringExtensions
 
 ## Default String Comparison
 
-If your don't want to use `StringComparison.OrdinalIgnoreCase` then you can configure the addin inside the FodyWeavers.xml file.
+The default string comparison can be configured in the FodyWeavers.xml file.
 
-For example if you want to use `StringComparison.InvariantCultureIgnoreCase` then add the following to FodyWeavers.xml.
+For example to use `StringComparison.InvariantCultureIgnoreCase` add the following to FodyWeavers.xml.
 
 ```xml
 <Weavers>
@@ -130,4 +130,4 @@ For example if you want to use `StringComparison.InvariantCultureIgnoreCase` the
 
 ## Icon
 
-<a href="http://thenounproject.com/noun/aardvark/#icon-No6982" target="_blank">Aardvark</a> designed by <a href="http://thenounproject.com/nmac" target="_blank">N J MacNeil</a> from The Noun Project
+<a href="https://thenounproject.com/noun/aardvark/#icon-No6982">Aardvark</a> designed by <a href="https://thenounproject.com/nmac">N J MacNeil</a> from [The Noun Project](https://thenounproject.com).
