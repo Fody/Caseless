@@ -4,7 +4,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 public class DefaultStringComparisonFinderTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     [Fact]
     public void GetStringComparisonFromXml()

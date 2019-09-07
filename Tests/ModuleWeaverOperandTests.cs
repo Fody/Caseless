@@ -6,7 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 public class ModuleWeaverOperandTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     static dynamic targetClass;
 

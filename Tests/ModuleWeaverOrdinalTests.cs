@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
 public class ModuleWeaverOrdinalTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     static dynamic targetClass;
 
