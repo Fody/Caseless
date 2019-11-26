@@ -2,11 +2,12 @@
 using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class ModuleWeaverOperandTests :
-    XunitApprovalBase
+    VerifyBase
 {
     static dynamic targetClass;
 

@@ -1,10 +1,11 @@
 using System.Xml.Linq;
 using Fody;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class DefaultStringComparisonFinderTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public void GetStringComparisonFromXml()
