@@ -1,4 +1,4 @@
-[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat&max-age=86400)](https://gitter.im/Fody/Fody)
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg)](https://gitter.im/Fody/Fody)
 [![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
 
 
