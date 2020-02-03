@@ -7,7 +7,7 @@ public partial class ModuleWeaver
 
     public void FindCoreReferences()
     {
-        StringDefinition = FindType("System.String");
-        StringComparisonDefinition = FindType("System.StringComparison");
+        StringDefinition = FindTypeDefinition("System.String");
+        StringComparisonDefinition = FindTypeDefinition("System.StringComparison");
     }
 }
