@@ -1,13 +1,10 @@
 ﻿using System;
 using Fody;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
 // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
-public class ModuleWeaverTests :
-    VerifyBase
+public class ModuleWeaverTests
 {
     static dynamic targetClass;
 
@@ -133,10 +130,5 @@ public class ModuleWeaverTests :
     public void Conditional()
     {
         Assert.True(targetClass.ConditionalBranch());
-    }
-
-    public ModuleWeaverTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }

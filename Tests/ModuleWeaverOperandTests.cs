@@ -2,12 +2,9 @@
 using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class ModuleWeaverOperandTests :
-    VerifyBase
+public class ModuleWeaverOperandTests
 {
     static dynamic targetClass;
 
@@ -50,10 +47,5 @@ public class ModuleWeaverOperandTests :
     public void Conditional()
     {
         Assert.True(targetClass.ConditionalBranchLong());
-    }
-
-    public ModuleWeaverOperandTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }

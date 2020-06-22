@@ -1,11 +1,8 @@
 using System.Xml.Linq;
 using Fody;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class DefaultStringComparisonFinderTests :
-    VerifyBase
+public class DefaultStringComparisonFinderTests
 {
     [Fact]
     public void GetStringComparisonFromXml()
@@ -41,10 +38,5 @@ public class DefaultStringComparisonFinderTests :
         var xElement = XElement.Parse("<Caseless StringComparison=''/>");
         var exception = Assert.Throws<WeavingException>(() => DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
         Assert.Equal("Expected StringComparison to have a value.", exception.Message);
-    }
-
-    public DefaultStringComparisonFinderTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }
