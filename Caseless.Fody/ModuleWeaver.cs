@@ -76,7 +76,7 @@ public partial class ModuleWeaver : BaseModuleWeaver
                 continue;
             }
 
-            if (!(instruction.Operand is MethodReference methodReference))
+            if (instruction.Operand is not MethodReference methodReference)
             {
                 continue;
             }
@@ -89,22 +89,23 @@ public partial class ModuleWeaver : BaseModuleWeaver
             foreach (var converter in converterCache.Converters)
             {
                 var replaceWith = converter.Convert(methodReference).ToList();
-                if (replaceWith.Count > 0)
+                if (replaceWith.Count <= 0)
                 {
-                    foreach (var inst in instructions.Where(i => i.Operand == instruction))
-                    {
-                        inst.Operand = replaceWith[0];
-                    }
-
-                    instructions.RemoveAt(index);
-                    foreach (var innerInstruction in replaceWith)
-                    {
-                        instructions.Insert(index, innerInstruction);
-                        index++;
-                    }
-
-                    break;
+                    continue;
                 }
+                foreach (var inst in instructions.Where(i => i.Operand == instruction))
+                {
+                    inst.Operand = replaceWith[0];
+                }
+
+                instructions.RemoveAt(index);
+                foreach (var innerInstruction in replaceWith)
+                {
+                    instructions.Insert(index, innerInstruction);
+                    index++;
+                }
+
+                break;
             }
         }
 
