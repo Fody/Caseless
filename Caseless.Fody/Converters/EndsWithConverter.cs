@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class EndsWithConverter : IConverter
 {
@@ -12,15 +14,19 @@ public class EndsWithConverter : IConverter
 
     public void Init()
     {
-        var methods = ModuleWeaver.StringDefinition.Methods;
-        reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "EndsWith" && x.Parameters.Matches("String", "StringComparison")));
+        var method = ModuleWeaver
+            .StringDefinition
+            .Methods
+            .First(_ => _.Name == "EndsWith" &&
+                        _.Parameters.Matches("String", "StringComparison"));
+        reference = ModuleDefinition.ImportReference(method);
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
     {
-       if (method.Name != "EndsWith")
-       {
-           yield break;
+        if (method.Name != "EndsWith")
+        {
+            yield break;
         }
 
         if (!method.Parameters.Matches("String"))
@@ -29,6 +35,6 @@ public class EndsWithConverter : IConverter
         }
 
         yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
-        yield return Instruction.Create(OpCodes.Callvirt,  reference);
+        yield return Instruction.Create(OpCodes.Callvirt, reference);
     }
 }

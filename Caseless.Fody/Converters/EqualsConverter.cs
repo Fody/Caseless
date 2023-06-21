@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class EqualsConverter : IEqualityConverter
 {
@@ -17,11 +19,15 @@ public class EqualsConverter : IEqualityConverter
         var methods = ModuleWeaver.StringDefinition.Methods;
         if (UseOperatorForOrdinal.GetValueOrDefault())
         {
-            reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "op_Equality" && x.Parameters.Matches("String", "String")));
+            var method = methods.First(_ => _.Name == "op_Equality" &&
+                                            _.Parameters.Matches("String", "String"));
+            reference = ModuleDefinition.ImportReference(method);
         }
         else
         {
-            reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "StringComparison")));
+            var method = methods.First(_ => _.Name == "Equals" &&
+                                            _.Parameters.Matches("String", "StringComparison"));
+            reference = ModuleDefinition.ImportReference(method);
         }
     }
 

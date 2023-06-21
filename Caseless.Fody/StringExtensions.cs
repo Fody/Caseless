@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Text;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public static class StringExtensions
 {
     public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
+
     public static string ReplaceCaseless(this string str, string oldValue, string newValue)
     {
         var builder = new StringBuilder();
@@ -19,6 +22,7 @@ public static class StringExtensions
             previousIndex = index;
             index = str.IndexOf(oldValue, index, DefaultComparison);
         }
+
         builder.Append(str.Substring(previousIndex));
 
         return builder.ToString();

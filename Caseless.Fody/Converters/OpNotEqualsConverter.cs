@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class OpNotEqualsConverter : IEqualityConverter
 {
@@ -19,8 +21,12 @@ public class OpNotEqualsConverter : IEqualityConverter
             return;
         }
 
-        var methods = ModuleWeaver.StringDefinition.Methods;
-        reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
+        var method = ModuleWeaver
+            .StringDefinition
+            .Methods
+            .First(_ => _.Name == "Equals" &&
+                        _.Parameters.Matches("String", "String", "StringComparison"));
+        reference = ModuleDefinition.ImportReference(method);
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)

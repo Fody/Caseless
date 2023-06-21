@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class CompareConverter : IConverter
 {
@@ -12,8 +14,12 @@ public class CompareConverter : IConverter
 
     public void Init()
     {
-        var methods = ModuleWeaver.StringDefinition.Methods;
-        reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "Compare" && x.Parameters.Matches("String", "String", "StringComparison")));
+        var method = ModuleWeaver
+            .StringDefinition
+            .Methods
+            .First(_ => _.Name == "Compare" &&
+                        _.Parameters.Matches("String", "String", "StringComparison"));
+        reference = ModuleDefinition.ImportReference(method);
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
@@ -23,6 +29,7 @@ public class CompareConverter : IConverter
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
             yield return Instruction.Create(OpCodes.Call, reference);
         }
+
         if (method.Name == "CompareTo" && method.Parameters.Matches("String"))
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class IndexOfConverter : IConverter
 {
@@ -15,9 +17,15 @@ public class IndexOfConverter : IConverter
     public void Init()
     {
         var methods = ModuleWeaver.StringDefinition.Methods;
-        referenceString = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "StringComparison")));
-        referenceStringInt = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "Int32", "StringComparison")));
-        referenceStringIntInt = ModuleDefinition.ImportReference(methods.First(x => x.Name == "IndexOf" && x.Parameters.Matches("String", "Int32", "Int32", "StringComparison")));
+        referenceString = ModuleDefinition.ImportReference(
+            methods.First(_ => _.Name == "IndexOf" &&
+                               _.Parameters.Matches("String", "StringComparison")));
+        referenceStringInt = ModuleDefinition.ImportReference(
+            methods.First(_ => _.Name == "IndexOf" &&
+                               _.Parameters.Matches("String", "Int32", "StringComparison")));
+        referenceStringIntInt = ModuleDefinition.ImportReference(
+            methods.First(_ => _.Name == "IndexOf" &&
+                               _.Parameters.Matches("String", "Int32", "Int32", "StringComparison")));
     }
 
     public IEnumerable<Instruction> Convert(MethodReference method)
@@ -33,12 +41,14 @@ public class IndexOfConverter : IConverter
             yield return Instruction.Create(OpCodes.Callvirt, referenceString);
             yield break;
         }
-        if (method.Parameters.Matches("String","Int32"))
+
+        if (method.Parameters.Matches("String", "Int32"))
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
             yield return Instruction.Create(OpCodes.Callvirt, referenceStringInt);
             yield break;
         }
+
         if (method.Parameters.Matches("String", "Int32", "Int32"))
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);

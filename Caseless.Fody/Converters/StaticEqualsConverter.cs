@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 public class StaticEqualsConverter : IEqualityConverter
 {
@@ -17,11 +19,15 @@ public class StaticEqualsConverter : IEqualityConverter
         var methods = ModuleWeaver.StringDefinition.Methods;
         if (UseOperatorForOrdinal.HasValue)
         {
-            reference = ModuleDefinition.ImportReference(methods.First(x => x.Name == "op_Equality" && x.Parameters.Matches("String", "String")));
+            var method = methods.First(_ => _.Name == "op_Equality" &&
+                                            _.Parameters.Matches("String", "String"));
+            reference = ModuleDefinition.ImportReference(method);
         }
         else
         {
-            reference = ModuleDefinition.ImportReference(methods.First(x => x.IsStatic && x.Name == "Equals" && x.Parameters.Matches("String", "String", "StringComparison")));
+            var method = methods.First(_ => _.IsStatic && _.Name == "Equals" &&
+                                            _.Parameters.Matches("String", "String", "StringComparison"));
+            reference = ModuleDefinition.ImportReference(method);
         }
     }
 
@@ -41,6 +47,7 @@ public class StaticEqualsConverter : IEqualityConverter
         {
             yield return Instruction.Create(OpCodes.Ldc_I4, StringComparisonConstant);
         }
+
         yield return Instruction.Create(OpCodes.Call, reference);
     }
 }
