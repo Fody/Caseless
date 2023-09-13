@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>1.9.1</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>11</LangVersion>
+    <LangVersion>preview</LangVersion>
     <NoWarn>NU5118</NoWarn>
   </PropertyGroup>
 </Project>

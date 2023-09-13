@@ -13,7 +13,7 @@ public class ModuleWeaverOrdinalTests
     {
         var weavingTask = new ModuleWeaver
         {
-            Config = XElement.Parse(@"<Caseless StringComparison=""ordinal""/>"),
+            Config = XElement.Parse("""<Caseless StringComparison="ordinal"/>"""),
         };
 
         var testResult = weavingTask.ExecuteTestRun(

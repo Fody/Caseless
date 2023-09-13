@@ -10,7 +10,7 @@ public class ModuleWeaverOperatorTests
     {
         var weavingTask = new ModuleWeaver
         {
-            Config = XElement.Parse(@"<Caseless StringComparison=""operator""/>"),
+            Config = XElement.Parse("""<Caseless StringComparison="operator"/>"""),
         };
 
         var testResult = weavingTask.ExecuteTestRun(

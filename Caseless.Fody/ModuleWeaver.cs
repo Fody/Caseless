@@ -93,7 +93,7 @@ public partial class ModuleWeaver : BaseModuleWeaver
                 {
                     continue;
                 }
-                foreach (var inst in instructions.Where(i => i.Operand == instruction))
+                foreach (var inst in instructions.Where(_ => _.Operand == instruction))
                 {
                     inst.Operand = replaceWith[0];
                 }
