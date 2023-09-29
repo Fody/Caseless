@@ -9,7 +9,7 @@ public class ConverterCache
     public DefaultStringComparisonFinder DefaultStringComparisonFinder;
     public void Execute()
     {
-        Converters = new List<IConverter>();
+        Converters = new();
         foreach (var type in ConverterTypes.Types)
         {
             var converter = (IConverter) Activator.CreateInstance(type);

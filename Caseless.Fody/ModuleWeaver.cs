@@ -17,7 +17,7 @@ public partial class ModuleWeaver : BaseModuleWeaver
             ModuleWeaver = this
         };
         comparisonFinder.Execute();
-        converterCache = new ConverterCache
+        converterCache = new()
         {
             ModuleWeaver = this,
             ModuleDefinition = ModuleDefinition,
