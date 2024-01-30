@@ -8,12 +8,12 @@ public class ModuleWeaverOperatorTests
 
     static ModuleWeaverOperatorTests()
     {
-        var weavingTask = new ModuleWeaver
+        var weaver = new ModuleWeaver
         {
             Config = XElement.Parse("""<Caseless StringComparison="operator"/>"""),
         };
 
-        var testResult = weavingTask.ExecuteTestRun(
+        var testResult = weaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             assemblyName: $"{nameof(ModuleWeaverOperatorTests)}AssemblyToProcess");
         targetClass = testResult.GetInstance("TargetClass");

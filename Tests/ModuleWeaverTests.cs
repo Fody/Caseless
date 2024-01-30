@@ -10,9 +10,9 @@ public class ModuleWeaverTests
 
     static ModuleWeaverTests()
     {
-        var weavingTask = new ModuleWeaver();
+        var weaver = new ModuleWeaver();
 
-        var testResult = weavingTask.ExecuteTestRun(
+        var testResult = weaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             assemblyName: $"{nameof(ModuleWeaverTests)}AssemblyToProcess");
         targetClass = testResult.GetInstance("TargetClass");

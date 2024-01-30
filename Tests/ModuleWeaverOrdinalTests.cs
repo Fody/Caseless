@@ -11,12 +11,12 @@ public class ModuleWeaverOrdinalTests
 
     static ModuleWeaverOrdinalTests()
     {
-        var weavingTask = new ModuleWeaver
+        var weaver = new ModuleWeaver
         {
             Config = XElement.Parse("""<Caseless StringComparison="ordinal"/>"""),
         };
 
-        var testResult = weavingTask.ExecuteTestRun(
+        var testResult = weaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             assemblyName: $"{nameof(ModuleWeaverOrdinalTests)}AssemblyToProcess");
         targetClass = testResult.GetInstance("TargetClass");
