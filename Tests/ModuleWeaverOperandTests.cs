@@ -28,7 +28,9 @@ public class ModuleWeaverOperandTests
         var il = body.GetILProcessor();
 
         // This is the key: a call which will be replaced, targeted by a branch
-        var call = il.Create(OpCodes.Callvirt, module.ImportReference(typeof(string).GetMethod("StartsWith", new[] {typeof(string)})));
+        var startsWith = module.ImportReference(typeof(string)
+            .GetMethod("StartsWith", [typeof(string)]));
+        var call = il.Create(OpCodes.Callvirt, startsWith);
         var branch = il.Create(OpCodes.Brtrue, call);
 
         il.Append(il.Create(OpCodes.Ldstr, "foo"));
