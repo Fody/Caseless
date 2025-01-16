@@ -1,6 +1,5 @@
 # <img src="/package_icon.png" height="30px"> Caseless.Fody
 
-[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg)](https://gitter.im/Fody/Fody)
 [![NuGet Status](https://badge.fury.io/nu/caseless.fody.svg)](https://www.nuget.org/packages/Caseless.Fody/)
 
 Change string comparisons to be case insensitive.
