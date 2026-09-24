@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Linq;
-using Xunit;
 using Fody;
 
 // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
@@ -22,51 +21,52 @@ public class ModuleWeaverOrdinalTests
         targetClass = testResult.GetInstance("TargetClass");
     }
 
-    [Fact]
-    public void OpEquals()
+    [Test]
+    public async Task OpEquals()
     {
-        Assert.False(targetClass.OpEquals());
+        await Assert.That((bool)targetClass.OpEquals()).IsFalse();
     }
 
-    [Fact]
-    public void OpEqualsWithNull()
+    [Test]
+    public async Task OpEqualsWithNull()
     {
-        Assert.False(targetClass.OpEqualsWithNull());
+        await Assert.That((bool)targetClass.OpEqualsWithNull()).IsFalse();
     }
 
-    [Fact]
-    public void OpNotEquals()
+    [Test]
+    public async Task OpNotEquals()
     {
-        Assert.True(targetClass.OpNotEquals());
+        await Assert.That((bool)targetClass.OpNotEquals()).IsTrue();
     }
 
-    [Fact]
-    public void OpNotEqualsWithNull()
+    [Test]
+    public async Task OpNotEqualsWithNull()
     {
-        Assert.True(targetClass.OpNotEqualsWithNull());
+        await Assert.That((bool)targetClass.OpNotEqualsWithNull()).IsTrue();
     }
 
-    [Fact]
-    public void Equal()
+    [Test]
+    public async Task Equal()
     {
-        Assert.False(targetClass.Equals());
+        await Assert.That((bool)targetClass.Equals()).IsFalse();
     }
 
-    [Fact]
-    public void EqualsCallOnNull()
+    [Test]
+    public async Task EqualsCallOnNull()
     {
-        Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
+        Action action = () => targetClass.EqualsCallOnNull();
+        await Assert.That(action).Throws<NullReferenceException>();
     }
 
-    [Fact]
-    public void EqualsStatic()
+    [Test]
+    public async Task EqualsStatic()
     {
-        Assert.False(targetClass.EqualsStatic());
+        await Assert.That((bool)targetClass.EqualsStatic()).IsFalse();
     }
 
-    [Fact]
-    public void EqualsStaticWithNull()
+    [Test]
+    public async Task EqualsStaticWithNull()
     {
-        Assert.False(targetClass.EqualsStaticWithNull());
+        await Assert.That((bool)targetClass.EqualsStaticWithNull()).IsFalse();
     }
 }

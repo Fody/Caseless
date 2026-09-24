@@ -2,7 +2,6 @@
 using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Xunit;
 
 public class ModuleWeaverOperandTests
 {
@@ -45,9 +44,9 @@ public class ModuleWeaverOperandTests
         type.Methods.Add(method);
     }
 
-    [Fact]
-    public void Conditional()
+    [Test]
+    public async Task Conditional()
     {
-        Assert.True(targetClass.ConditionalBranchLong());
+        await Assert.That((bool)targetClass.ConditionalBranchLong()).IsTrue();
     }
 }

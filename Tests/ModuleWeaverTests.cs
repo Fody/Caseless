@@ -1,6 +1,5 @@
 ﻿using System;
 using Fody;
-using Xunit;
 
 // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
@@ -18,117 +17,118 @@ public class ModuleWeaverTests
         targetClass = testResult.GetInstance("TargetClass");
     }
 
-    [Fact]
-    public void CompareTo()
+    [Test]
+    public async Task CompareTo()
     {
-        Assert.Equal(0, targetClass.CompareTo());
+        await Assert.That((int)targetClass.CompareTo()).IsEqualTo(0);
     }
 
-    [Fact]
-    public void CompareStatic()
+    [Test]
+    public async Task CompareStatic()
     {
-        Assert.Equal(0, targetClass.CompareStatic());
+        await Assert.That((int)targetClass.CompareStatic()).IsEqualTo(0);
     }
 
-    [Fact]
-    public void CompareStaticWithNull()
+    [Test]
+    public async Task CompareStaticWithNull()
     {
-        Assert.Equal(-1, targetClass.CompareStaticWithNull());
+        await Assert.That((int)targetClass.CompareStaticWithNull()).IsEqualTo(-1);
     }
 
-    [Fact]
-    public void Contains()
+    [Test]
+    public async Task Contains()
     {
-        Assert.True(targetClass.Contains());
+        await Assert.That((bool)targetClass.Contains()).IsTrue();
     }
 
-    [Fact]
-    public void IndexOf()
+    [Test]
+    public async Task IndexOf()
     {
-        Assert.Equal(0, targetClass.IndexOf());
+        await Assert.That((int)targetClass.IndexOf()).IsEqualTo(0);
     }
 
-    [Fact]
-    public void IndexOf_StartIndex()
+    [Test]
+    public async Task IndexOf_StartIndex()
     {
-        Assert.Equal(1, targetClass.IndexOf_StartIndex());
+        await Assert.That((int)targetClass.IndexOf_StartIndex()).IsEqualTo(1);
     }
 
-    [Fact]
-    public void IndexOf_StartIndexCount()
+    [Test]
+    public async Task IndexOf_StartIndexCount()
     {
-        Assert.Equal(1, targetClass.IndexOf_StartIndexCount());
+        await Assert.That((int)targetClass.IndexOf_StartIndexCount()).IsEqualTo(1);
     }
 
-    [Fact]
-    public void LastIndexOf()
+    [Test]
+    public async Task LastIndexOf()
     {
-        Assert.Equal(0, targetClass.LastIndexOf());
+        await Assert.That((int)targetClass.LastIndexOf()).IsEqualTo(0);
     }
 
-    [Fact]
-    public void OpEquals()
+    [Test]
+    public async Task OpEquals()
     {
-        Assert.True(targetClass.OpEquals());
+        await Assert.That((bool)targetClass.OpEquals()).IsTrue();
     }
 
-    [Fact]
-    public void OpEqualsWithNull()
+    [Test]
+    public async Task OpEqualsWithNull()
     {
-        Assert.False(targetClass.OpEqualsWithNull());
+        await Assert.That((bool)targetClass.OpEqualsWithNull()).IsFalse();
     }
 
-    [Fact]
-    public void OpNotEquals()
+    [Test]
+    public async Task OpNotEquals()
     {
-        Assert.False(targetClass.OpNotEquals());
+        await Assert.That((bool)targetClass.OpNotEquals()).IsFalse();
     }
 
-    [Fact]
-    public void OpNotEqualsWithNull()
+    [Test]
+    public async Task OpNotEqualsWithNull()
     {
-        Assert.True(targetClass.OpNotEqualsWithNull());
+        await Assert.That((bool)targetClass.OpNotEqualsWithNull()).IsTrue();
     }
 
-    [Fact]
-    public void StartsWith()
+    [Test]
+    public async Task StartsWith()
     {
-        Assert.True(targetClass.StartsWith());
+        await Assert.That((bool)targetClass.StartsWith()).IsTrue();
     }
 
-    [Fact]
-    public void EndsWith()
+    [Test]
+    public async Task EndsWith()
     {
-        Assert.True(targetClass.EndsWith());
+        await Assert.That((bool)targetClass.EndsWith()).IsTrue();
     }
 
-    [Fact]
-    public void Equal()
+    [Test]
+    public async Task Equal()
     {
-        Assert.True(targetClass.Equals());
+        await Assert.That((bool)targetClass.Equals()).IsTrue();
     }
 
-    [Fact]
-    public void EqualsCallOnNull()
+    [Test]
+    public async Task EqualsCallOnNull()
     {
-        Assert.Throws<NullReferenceException>(() => targetClass.EqualsCallOnNull());
+        Action action = () => targetClass.EqualsCallOnNull();
+        await Assert.That(action).Throws<NullReferenceException>();
     }
 
-    [Fact]
-    public void EqualsStatic()
+    [Test]
+    public async Task EqualsStatic()
     {
-        Assert.True(targetClass.EqualsStatic());
+        await Assert.That((bool)targetClass.EqualsStatic()).IsTrue();
     }
 
-    [Fact]
-    public void EqualsStaticWithNull()
+    [Test]
+    public async Task EqualsStaticWithNull()
     {
-        Assert.False(targetClass.EqualsStaticWithNull());
+        await Assert.That((bool)targetClass.EqualsStaticWithNull()).IsFalse();
     }
 
-    [Fact]
-    public void Conditional()
+    [Test]
+    public async Task Conditional()
     {
-        Assert.True(targetClass.ConditionalBranch());
+        await Assert.That((bool)targetClass.ConditionalBranch()).IsTrue();
     }
 }

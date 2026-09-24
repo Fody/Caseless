@@ -1,42 +1,41 @@
 using System.Xml.Linq;
 using Fody;
-using Xunit;
 
 public class DefaultStringComparisonFinderTests
 {
-    [Fact]
-    public void GetStringComparisonFromXml()
+    [Test]
+    public async Task GetStringComparisonFromXml()
     {
         var xElement = XElement.Parse("<Caseless StringComparison='InvariantCultureIgnoreCase'/>");
-        Assert.Equal("InvariantCultureIgnoreCase", DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
+        await Assert.That(DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement)).IsEqualTo("InvariantCultureIgnoreCase");
     }
 
-    [Fact]
+    [Test]
     public void GetStringComparisonFromXmlNull()
     {
         DefaultStringComparisonFinder.GetStringComparisonFromXml(null);
     }
 
-    [Fact]
-    public void GetStringComparisonFromXmlTrim()
+    [Test]
+    public async Task GetStringComparisonFromXmlTrim()
     {
         var xElement = XElement.Parse("<Caseless StringComparison=' InvariantCultureIgnoreCase '/>");
-        Assert.Equal("InvariantCultureIgnoreCase", DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
+        await Assert.That(DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement)).IsEqualTo("InvariantCultureIgnoreCase");
     }
 
-    [Fact]
-    public void GetStringComparisonFromXmlWhiteSpace()
+    [Test]
+    public async Task GetStringComparisonFromXmlWhiteSpace()
     {
         var xElement = XElement.Parse("<Caseless StringComparison='  '/>");
-        var exception = Assert.Throws<WeavingException>(() => DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
-        Assert.Equal("Expected StringComparison to have a value.", exception.Message);
+        var exception = await Assert.That(() => { DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement); }).Throws<WeavingException>();
+        await Assert.That(exception!.Message).IsEqualTo("Expected StringComparison to have a value.");
     }
 
-    [Fact]
-    public void GetStringComparisonFromXmlEmpty()
+    [Test]
+    public async Task GetStringComparisonFromXmlEmpty()
     {
         var xElement = XElement.Parse("<Caseless StringComparison=''/>");
-        var exception = Assert.Throws<WeavingException>(() => DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement));
-        Assert.Equal("Expected StringComparison to have a value.", exception.Message);
+        var exception = await Assert.That(() => { DefaultStringComparisonFinder.GetStringComparisonFromXml(xElement); }).Throws<WeavingException>();
+        await Assert.That(exception!.Message).IsEqualTo("Expected StringComparison to have a value.");
     }
 }
