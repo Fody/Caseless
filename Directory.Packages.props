@@ -7,7 +7,7 @@
     <PackageVersion Include="FodyHelpers" Version="6.9.2" />
     <PackageVersion Include="FodyPackaging" Version="6.9.3" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageVersion Include="System.Diagnostics.EventLog" Version="9.0.2" />
+    <PackageVersion Include="System.Diagnostics.EventLog" Version="10.0.12" />
     <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="9.0.2" />
     <PackageVersion Include="System.Security.Permissions" Version="8.0.0" />
     <PackageVersion Include="System.Threading.AccessControl" Version="8.0.0" />
